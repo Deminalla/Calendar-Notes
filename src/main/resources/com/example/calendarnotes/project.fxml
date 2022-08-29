@@ -72,11 +72,12 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="528.0" layoutY="64.0" mnemonicParsing="false" text="Update" />
-                  <Button layoutX="531.0" layoutY="21.0" mnemonicParsing="false" text="Create" />
-                  <Button layoutX="530.0" layoutY="110.0" mnemonicParsing="false" text="Delete" />
-                  <ChoiceBox layoutX="28.0" layoutY="21.0" prefWidth="150.0" />
-                  <TextField layoutX="28.0" layoutY="77.0" prefHeight="263.0" prefWidth="388.0" />
+                  <Button layoutX="581.0" layoutY="109.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
+                  <Button layoutX="581.0" layoutY="66.0" mnemonicParsing="false" onAction="#clear" text="New" />
+                  <Button layoutX="575.0" layoutY="155.0" mnemonicParsing="false" text="Delete" />
+                  <ChoiceBox fx:id="titleBox" layoutX="210.0" layoutY="27.0" prefWidth="150.0" />
+                  <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" />
+                  <TextArea fx:id="textN" layoutX="28.0" layoutY="66.0" prefHeight="286.0" prefWidth="516.0" />
                </children></AnchorPane>
       </content>
     </Tab>
