@@ -59,9 +59,11 @@ public class Controller implements Initializable {
         LocalDate currentdate = LocalDate.now();
         int currentMonth = currentdate.getMonthValue();
         int currentYear = currentdate.getYear();
+        int currentDay = currentdate.getDayOfMonth();
         monthBox.setValue(Month.of(currentMonth));
         yearBox.setValue(currentYear);
         printCalendarMonthYear(currentMonth, currentYear,list );
+        highlight_firstday(currentDay,list);
         monthBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -94,6 +96,18 @@ public class Controller implements Initializable {
             day_of_month++;
         }
 
+    }
+    public void highlight_firstday(int currentDay,List<Button> butonlist){
+        for (int i = 0; i < butonlist.size(); i++) {
+            if(butonlist.get(i).getText().equals(currentDay+"")){
+                butonlist.get(i).fire();
+            }
+        }
+    }
+    @FXML
+    void button(ActionEvent event){
+        Object node = event.getSource();
+        Button b = (Button)node;
     }
 
     @FXML
