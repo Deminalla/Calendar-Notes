@@ -5,8 +5,7 @@ import java.util.HashMap;
 
 public class DB {
     private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:Cal.db";
+        String url = "jdbc:sqlite:Cal.db"; // SQLite connection string
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -29,17 +28,27 @@ public class DB {
         }
     }
 
+    public void update(String title, String text){
+        String sql = "UPDATE Notes SET Textfield = ? WHERE Title = ?";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, text);
+            pstmt.setString(2, title);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public HashMap<String, String> selectAll(){
         String sql = "SELECT Title, TextField FROM Notes";
         HashMap<String, String> noteList = new HashMap<>();
 
         try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)){
 
-
-            // loop through the result set
-            while (rs.next()) {
+            while (rs.next()) { // loop through the result set
                 String title = rs.getString("Title");
                 String text = rs.getString("TextField");
                 noteList.put(title, text);
@@ -47,11 +56,11 @@ public class DB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return noteList;
+        return noteList; // return hashmap so you can put all the information to noteList in Controller
     }
 
     public static void main(String[] args) {
-        // coult be used for testing
+        // could be used for testing
 
         /*DB app = new DB();
         // insert three new rows
