@@ -59,11 +59,9 @@ public class Controller implements Initializable {
         LocalDate currentdate = LocalDate.now();
         int currentMonth = currentdate.getMonthValue();
         int currentYear = currentdate.getYear();
-        int currentDay = currentdate.getDayOfMonth();
         monthBox.setValue(Month.of(currentMonth));
         yearBox.setValue(currentYear);
         printCalendarMonthYear(currentMonth, currentYear,list );
-        highlight_firstday(currentDay,list);
         monthBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -77,7 +75,8 @@ public class Controller implements Initializable {
             }
         });
     }
-    public void printCalendarMonthYear(int month, int year, List<Button> butonlist) {
+
+    private static void printCalendarMonthYear(int month, int year,List<Button> butonlist) {
         for (Button button:butonlist) {
             button.setText("");
         }
@@ -89,25 +88,28 @@ public class Controller implements Initializable {
         firstWeekdayOfMonth = ((firstWeekdayOfMonth == 0) ? 7 : firstWeekdayOfMonth);
         printCalendar(numberOfMonthDays, firstWeekdayOfMonth, butonlist);
     }
-    public void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
-        int day_of_month = 1;
-        for (int j = 0; j < numberOfMonthDays; j++) {
-            butonlist.get(firstWeekdayOfMonth+j-1).setText(day_of_month+"");
-            day_of_month++;
-        }
+    private static void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
 
-    }
-    public void highlight_firstday(int currentDay,List<Button> butonlist){
-        for (int i = 0; i < butonlist.size(); i++) {
-            if(butonlist.get(i).getText().equals(currentDay+"")){
-                butonlist.get(i).fire();
+//        int day_of_month = 1;
+//        for (int j = 0; j < numberOfMonthDays; j++) {
+//            butonlist.get(firstWeekdayOfMonth+j-1).setText(day_of_month+"");
+//            day_of_month++;
+//        }
+        int day_of_month = 1;
+
+        for (int j =0; j<37;j++){
+            if(j>=firstWeekdayOfMonth-1&&j<numberOfMonthDays+firstWeekdayOfMonth-1){
+                butonlist.get(j).setVisible(true);
+                butonlist.get(j).setText(day_of_month+"");
+                day_of_month++;
+
+            }
+            else{
+               butonlist.get(j).setVisible(false);
+
             }
         }
-    }
-    @FXML
-    void button(ActionEvent event){
-        Object node = event.getSource();
-        Button b = (Button)node;
+
     }
 
     @FXML
