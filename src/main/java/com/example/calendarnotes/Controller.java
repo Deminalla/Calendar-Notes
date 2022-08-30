@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,7 +36,8 @@ public class Controller implements Initializable {
 
     Month[] monthList = Month.values();
     List<Integer> yearList = IntStream.range(1970, 2023).boxed().collect(Collectors.toList());
-    HashMap<String ,String> noteList = new HashMap<>();
+    HashMap<String, String> noteList = new HashMap<>();
+    DB notesInfo = new DB();
 
 
     @Override
@@ -43,6 +45,10 @@ public class Controller implements Initializable {
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
+
+        noteList.putAll(notesInfo.selectAll());
+        Set<String> keys = noteList.keySet();
+        titleBox.getItems().addAll(keys);
     }
 
     @FXML
@@ -51,6 +57,7 @@ public class Controller implements Initializable {
         String text = textN.getText();
         noteList.put(title, text);
         titleBox.getItems().addAll(title);
+        notesInfo.insert(title, text);
     }
 
     public void retrieveNote(ActionEvent event){
