@@ -71,7 +71,7 @@ public class Controller implements Initializable {
         yearBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                printCalendarMonthYear(monthBox.getValue().getValue(), (Integer) number2,list );
+                printCalendarMonthYear(monthBox.getValue().getValue(), (Integer) number2+1970,list );
             }
         });
     }
