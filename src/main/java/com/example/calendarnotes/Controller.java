@@ -55,23 +55,31 @@ public class Controller implements Initializable {
         Set<String> keys = noteList.keySet();
         titleBox.getItems().addAll(keys); // this will show the titles in the choicebox
 
+        //b2.setStyle("-fx-border-color: #39ff39;"); // will change border color
+
         Collections.addAll(list, b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37);
         LocalDate currentdate = LocalDate.now();
         int currentMonth = currentdate.getMonthValue();
         int currentYear = currentdate.getYear();
+
+        int currentDay = currentdate.getDayOfMonth();
+        list.get(currentDay-1).setDefaultButton(true);
+        //list.get(currentDay-1).setBackground(...);
+        list.get(currentDay-1).setStyle("-fx-border-color: #ff396e;");
+
         monthBox.setValue(Month.of(currentMonth));
         yearBox.setValue(currentYear);
-        printCalendarMonthYear(currentMonth, currentYear,list );
-        monthBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        printCalendarMonthYear(currentMonth, currentYear, list);
+        monthBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                printCalendarMonthYear((Integer) number2+1, yearBox.getValue(),list );
+                printCalendarMonthYear((Integer) number2+1, yearBox.getValue(), list);
             }
         });
-        yearBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        yearBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                printCalendarMonthYear(monthBox.getValue().getValue(), (Integer) number2+1970,list );
+                printCalendarMonthYear(monthBox.getValue().getValue(),(Integer) number2+1970, list);
             }
         });
     }
