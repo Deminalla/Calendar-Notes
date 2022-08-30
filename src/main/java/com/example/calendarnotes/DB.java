@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class DB {
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:C:\\Users\\deniz\\Desktop\\Calendar-Notes\\Cal.db";
+        String url = "jdbc:sqlite:Cal.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
