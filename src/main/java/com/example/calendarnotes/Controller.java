@@ -104,14 +104,11 @@ public class Controller implements Initializable {
                 butonlist.get(j).setVisible(true);
                 butonlist.get(j).setText(day_of_month+"");
                 day_of_month++;
-
             }
             else{
                butonlist.get(j).setVisible(false);
-
             }
         }
-
     }
 
     @FXML
