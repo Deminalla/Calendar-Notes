@@ -74,7 +74,7 @@
                <children>
                   <Button layoutX="581.0" layoutY="109.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
                   <Button layoutX="581.0" layoutY="66.0" mnemonicParsing="false" onAction="#clear" text="New" />
-                  <Button layoutX="575.0" layoutY="155.0" mnemonicParsing="false" text="Delete" />
+                  <Button layoutX="575.0" layoutY="155.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
                   <ChoiceBox fx:id="titleBox" layoutX="249.0" layoutY="27.0" prefHeight="26.0" prefWidth="174.0" />
                   <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
                   <TextArea fx:id="textN" layoutX="28.0" layoutY="66.0" prefHeight="286.0" prefWidth="516.0" />

@@ -55,8 +55,8 @@ public class Controller implements Initializable {
     void createNote(ActionEvent event) {
         String title = titleN.getText();
         String text = textN.getText();
-        noteList.put(title, text);
         if(!noteList.containsKey(title)){
+            noteList.put(title, text);
             titleBox.getItems().addAll(title);
             notesInfo.insert(title, text);
         }
@@ -69,6 +69,18 @@ public class Controller implements Initializable {
         String title = titleBox.getValue();
         titleN.setText(title);
         textN.setText(noteList.get(title));
+    }
+
+    @FXML
+    void deleteNote(ActionEvent event){
+        String title = titleN.getText();
+        noteList.remove(title);
+        titleBox.getItems().remove(title);
+        notesInfo.remove(title);
+
+        // would be nice if I could somehow call the clear function (but it would have to be static and I can't do that)
+        textN.clear();
+        titleN.clear();
     }
 
     @FXML
