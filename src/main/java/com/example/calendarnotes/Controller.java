@@ -71,12 +71,11 @@ public class Controller implements Initializable {
         yearBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                printCalendarMonthYear(monthBox.getValue().getValue(), (Integer) number2,list );
+                printCalendarMonthYear(monthBox.getValue().getValue(), (Integer) number2+1970,list );
             }
         });
     }
-
-    private static void printCalendarMonthYear(int month, int year,List<Button> butonlist) {
+    public void printCalendarMonthYear(int month, int year, List<Button> butonlist) {
         for (Button button:butonlist) {
             button.setText("");
         }
@@ -88,7 +87,7 @@ public class Controller implements Initializable {
         firstWeekdayOfMonth = ((firstWeekdayOfMonth == 0) ? 7 : firstWeekdayOfMonth);
         printCalendar(numberOfMonthDays, firstWeekdayOfMonth, butonlist);
     }
-    private static void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
+    public void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
         int day_of_month = 1;
         for (int j = 0; j < numberOfMonthDays; j++) {
             butonlist.get(firstWeekdayOfMonth+j-1).setText(day_of_month+"");
