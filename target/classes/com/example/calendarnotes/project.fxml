@@ -22,7 +22,7 @@
                   <Button layoutX="189.0" layoutY="88.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="29.0" />
                   <Button layoutX="232.0" layoutY="88.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="29.0" />
                   <Button layoutX="271.0" layoutY="88.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="29.0" />
-                  <TextArea layoutX="354.0" layoutY="77.0" prefHeight="226.0" prefWidth="270.0" />
+                  <TextArea layoutX="354.0" layoutY="77.0" prefHeight="278.0" prefWidth="270.0" />
                   <Button layoutX="375.0" layoutY="27.0" mnemonicParsing="false" text="Create" />
                   <Button layoutX="436.0" layoutY="27.0" mnemonicParsing="false" text="Update" />
                   <Button layoutX="500.0" layoutY="27.0" mnemonicParsing="false" text="Delete" />
@@ -75,8 +75,8 @@
                   <Button layoutX="581.0" layoutY="109.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
                   <Button layoutX="581.0" layoutY="66.0" mnemonicParsing="false" onAction="#clear" text="New" />
                   <Button layoutX="575.0" layoutY="155.0" mnemonicParsing="false" text="Delete" />
-                  <ChoiceBox fx:id="titleBox" layoutX="210.0" layoutY="27.0" prefWidth="150.0" />
-                  <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" />
+                  <ChoiceBox fx:id="titleBox" layoutX="249.0" layoutY="27.0" prefHeight="26.0" prefWidth="174.0" />
+                  <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
                   <TextArea fx:id="textN" layoutX="28.0" layoutY="66.0" prefHeight="286.0" prefWidth="516.0" />
                </children></AnchorPane>
       </content>
