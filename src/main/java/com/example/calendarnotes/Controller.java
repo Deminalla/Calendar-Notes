@@ -89,10 +89,25 @@ public class Controller implements Initializable {
         printCalendar(numberOfMonthDays, firstWeekdayOfMonth, butonlist);
     }
     private static void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
+
+//        int day_of_month = 1;
+//        for (int j = 0; j < numberOfMonthDays; j++) {
+//            butonlist.get(firstWeekdayOfMonth+j-1).setText(day_of_month+"");
+//            day_of_month++;
+//        }
         int day_of_month = 1;
-        for (int j = 0; j < numberOfMonthDays; j++) {
-            butonlist.get(firstWeekdayOfMonth+j-1).setText(day_of_month+"");
-            day_of_month++;
+
+        for (int j =0; j<37;j++){
+            if(j>=firstWeekdayOfMonth-1&&j<numberOfMonthDays+firstWeekdayOfMonth-1){
+                butonlist.get(j).setVisible(true);
+                butonlist.get(j).setText(day_of_month+"");
+                day_of_month++;
+
+            }
+            else{
+               butonlist.get(j).setVisible(false);
+
+            }
         }
 
     }
