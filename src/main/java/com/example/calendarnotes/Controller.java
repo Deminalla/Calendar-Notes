@@ -46,9 +46,9 @@ public class Controller implements Initializable {
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
 
-        noteList.putAll(notesInfo.selectAll());
+        noteList.putAll(notesInfo.selectAll()); // add data from database
         Set<String> keys = noteList.keySet();
-        titleBox.getItems().addAll(keys);
+        titleBox.getItems().addAll(keys); // this will show the titles in the choicebox
     }
 
     @FXML
@@ -56,8 +56,13 @@ public class Controller implements Initializable {
         String title = titleN.getText();
         String text = textN.getText();
         noteList.put(title, text);
-        titleBox.getItems().addAll(title);
-        notesInfo.insert(title, text);
+        if(!noteList.containsKey(title)){
+            titleBox.getItems().addAll(title);
+            notesInfo.insert(title, text);
+        }
+        else{
+            notesInfo.update(title, text);
+        }
     }
 
     public void retrieveNote(ActionEvent event){
