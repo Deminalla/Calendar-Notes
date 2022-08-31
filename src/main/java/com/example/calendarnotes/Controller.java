@@ -3,12 +3,12 @@ package com.example.calendarnotes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -38,6 +38,10 @@ public class Controller implements Initializable {
     @FXML
     private TextArea textCN;
 
+
+    @FXML
+    private ColorPicker color;
+
     @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
     private List<Button> list = new ArrayList<>();
@@ -46,9 +50,11 @@ public class Controller implements Initializable {
     Month[] monthList = Month.values();
     List<Integer> yearList = IntStream.range(1970, 2023).boxed().collect(Collectors.toList());
     HashMap<String, String> noteList = new HashMap<>();
-    HashMap<String, String> calendarNoteList = new HashMap<>();
+    HashMap<String, List<String>> calendarNoteList = new HashMap<>();
     DB notesInfo = new DB();
-    DB calendarNotesInfo = new DB();
+
+    DBCalendar DBCalendar = new DBCalendar();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +66,7 @@ public class Controller implements Initializable {
         Set<String> keys = noteList.keySet();
         titleBox.getItems().addAll(keys); // this will show the titles in the choicebox
 
-        calendarNoteList.putAll(calendarNotesInfo.selectAll("CalendarNotes"));
+        calendarNoteList.putAll(DBCalendar.selectAll());
 
 
         Collections.addAll(list, b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37);
@@ -122,11 +128,18 @@ public class Controller implements Initializable {
     @FXML
     void Button(ActionEvent event){
         for (Button button:list) {
-            button.setStyle("-fx-border-color: black;");
+            button.getStyleClass().removeAll("active");
+            button.getStyleClass().add("button");
         }
         Object node = event.getSource();
         Button b = (Button)node;
-        b.setStyle("-fx-border-color: #ff396e;");
+        b.getStyleClass().add("active");
+        color.setOnAction(new EventHandler() {
+            @FXML
+            public void handle(Event t) {
+                b.setStyle("-fx-background-color: "+color.getValue().toString().replace("0x", "#")+";");
+            }
+        });
         currentButton = b;
         retrieveCalendarNote();
         }
@@ -135,7 +148,8 @@ public class Controller implements Initializable {
         DateInfo dateContr = new DateInfo();
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
 
-        textCN.setText(calendarNoteList.get(dateString));
+        textCN.setText(calendarNoteList.get(dateString).get(0));
+        color.setValue(Color.valueOf(calendarNoteList.get(dateString).get(1)));
     }
 
     @FXML
@@ -144,13 +158,17 @@ public class Controller implements Initializable {
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
 
         String text = textCN.getText();
+        String colour = color.getValue().toString();
+        List<String> list_of_props = new ArrayList<String>();
+        Collections.addAll(list_of_props,text,colour);
+
         if(!calendarNoteList.containsKey(dateString)){
-            calendarNoteList.put(dateString, text);
-            calendarNotesInfo.insert(dateString, text, "CalendarNotes");
+            calendarNoteList.put(dateString, list_of_props);
+            DBCalendar.insert(dateString,text,colour );
         }
         else{
-            calendarNoteList.put(dateString, text);
-            calendarNotesInfo.update(dateString, text, "CalendarNotes");
+            calendarNoteList.put(dateString, list_of_props);
+            DBCalendar.update(dateString,text,colour);
         }
     }
 
@@ -160,7 +178,7 @@ public class Controller implements Initializable {
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
 
         calendarNoteList.remove(dateString);
-        calendarNotesInfo.remove(dateString);
+        DBCalendar.remove(dateString);
         textCN.clear();
     }
 

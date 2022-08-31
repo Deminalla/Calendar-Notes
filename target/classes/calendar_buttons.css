@@ -1,0 +1,6 @@
+.button{
+    -fx-border-color: black;
+}
+.active{
+ -fx-border-color: #ff396e;
+}
