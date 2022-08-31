@@ -16,7 +16,7 @@ public class DB {
     }
 
     public void insert(String title, String text) {
-        String sql = "INSERT INTO Notes(Title,TextField) VALUES(?,?)";
+        String sql = "INSERT INTO Notes(Title,TextField) VALUES(?,?)"; // ? are values that we will initialize later
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -34,6 +34,17 @@ public class DB {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, text);
             pstmt.setString(2, title);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void remove(String title){
+        String sql = "DELETE FROM Notes WHERE Title = ?";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, title);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
