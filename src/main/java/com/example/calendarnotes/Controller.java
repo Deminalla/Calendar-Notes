@@ -3,11 +3,12 @@ package com.example.calendarnotes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -35,7 +36,6 @@ public class Controller implements Initializable {
     private TextField titleN;
 
     @FXML
-    private ColorPicker color;
     private TextArea textCN;
 
     @FXML
@@ -122,19 +122,10 @@ public class Controller implements Initializable {
     @FXML
     void Button(ActionEvent event){
         for (Button button:list) {
-            button.getStyleClass().removeAll("active");
-            button.getStyleClass().add("button");
+            button.setStyle("-fx-border-color: black;");
         }
         Object node = event.getSource();
         Button b = (Button)node;
-
-        b.getStyleClass().add("active");
-        color.setOnAction(new EventHandler() {
-            @FXML
-            public void handle(Event t) {
-                b.setStyle("-fx-background-color: "+color.getValue().toString().replace("0x", "#")+";");
-            }
-        });
         b.setStyle("-fx-border-color: #ff396e;");
         currentButton = b;
         retrieveCalendarNote();
@@ -145,7 +136,6 @@ public class Controller implements Initializable {
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
 
         textCN.setText(calendarNoteList.get(dateString));
-
     }
 
     @FXML
