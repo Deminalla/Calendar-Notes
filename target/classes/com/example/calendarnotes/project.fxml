@@ -50,7 +50,7 @@
                         <Button fx:id="b27" layoutX="236.0" layoutY="217.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b28" layoutX="279.0" layoutY="217.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b29" layoutX="21.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />
-                        <Button fx:id="b30" layoutX="64.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />
+                        <Button fx:id="b30" layoutX="64.0" layoutY="260.0" mnemonicParsing="false" onAction="#button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b31" layoutX="107.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b32" layoutX="150.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b33" layoutX="193.0" layoutY="260.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="43.0" />

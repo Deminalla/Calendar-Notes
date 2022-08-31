@@ -60,14 +60,19 @@ public class Controller implements Initializable {
         int currentMonth = currentdate.getMonthValue();
         int currentYear = currentdate.getYear();
 
-        int currentDay = currentdate.getDayOfMonth();
-        list.get(currentDay-1).setDefaultButton(true);
-        //list.get(currentDay-1).setBackground(...);
-        list.get(currentDay-1).setStyle("-fx-border-color: #ff396e;");
+//        list.get(currentDay-1).setDefaultButton(true);
+//        list.get(currentDay-1).setStyle("-fx-border-color: #ff396e;");
 
         monthBox.setValue(Month.of(currentMonth));
         yearBox.setValue(currentYear);
         printCalendarMonthYear(currentMonth, currentYear, list);
+
+        int currentDay = currentdate.getDayOfMonth();
+        for (Button button:list) {
+            if (button.getText().equals(currentDay+"")){
+                button.fire();
+            }
+        }
         monthBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -96,13 +101,6 @@ public class Controller implements Initializable {
     }
     private static void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
 
-        /*
-        int day_of_month = 1;
-        for (int j = 0; j < numberOfMonthDays; j++) {
-            butonlist.get(firstWeekdayOfMonth+j-1).setText(day_of_month+"");
-            day_of_month++;
-        }
-        */
         int day_of_month = 1;
 
         for (int j =0; j<37;j++){
@@ -116,6 +114,16 @@ public class Controller implements Initializable {
             }
         }
     }
+    @FXML
+    void Button(ActionEvent event) {
+        for (Button button:list) {
+            button.setStyle("-fx-border-color: black;");
+        }
+        Object node = event.getSource();
+        Button b = (Button)node;
+        b.setStyle("-fx-border-color: #ff396e;");
+    }
+
 
     @FXML
     void createNote(ActionEvent event) {
