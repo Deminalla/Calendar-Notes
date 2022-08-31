@@ -36,13 +36,19 @@ public class Controller implements Initializable {
     private TextField titleN;
 
     @FXML
+    private TextArea textCN;
+
+    @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
     private List<Button> list = new ArrayList<>();
 
     Month[] monthList = Month.values();
     List<Integer> yearList = IntStream.range(1970, 2023).boxed().collect(Collectors.toList());
     HashMap<String, String> noteList = new HashMap<>();
+    HashMap<String, String> calendarNoteList = new HashMap<>();
     DB notesInfo = new DB();
+    DB calendarNotesInfo = new DB();
+    Button currentButton = new Button();
 
 
     @Override
@@ -114,14 +120,35 @@ public class Controller implements Initializable {
             }
         }
     }
+
     @FXML
-    void Button(ActionEvent event) {
+    void Button(ActionEvent event){
         for (Button button:list) {
             button.setStyle("-fx-border-color: black;");
         }
         Object node = event.getSource();
         Button b = (Button)node;
+        currentButton = b;
         b.setStyle("-fx-border-color: #ff396e;");
+        }
+
+    @FXML
+    void createCalendarNode (ActionEvent event) {
+        int currentDay = Integer.parseInt(currentButton.getText()); // will get the value of the last selected day button
+        String currentDay0 = String.format("%02d" , currentDay); // so if it was day 7, now it will be 07
+        int currentMonth = monthBox.getValue().getValue();
+        String currentMonth0 = String.format("%02d" , currentMonth);
+        int currentYear = yearBox.getValue();
+
+        String dateString = currentDay0 + "-" + currentMonth0 + "-" + currentYear;
+        String text = textCN.getText();
+        if(!calendarNoteList.containsKey(dateString)){
+            calendarNoteList.put(dateString, text);
+            calendarNotesInfo.insert(dateString, text, "CalendarNotes");
+        }
+        else{
+            calendarNotesInfo.update(dateString, text, "CalendarNotes");
+        }
     }
 
 
@@ -132,10 +159,10 @@ public class Controller implements Initializable {
         if(!noteList.containsKey(title)){
             noteList.put(title, text);
             titleBox.getItems().addAll(title);
-            notesInfo.insert(title, text);
+            notesInfo.insert(title, text, "Notes");
         }
         else{
-            notesInfo.update(title, text);
+            notesInfo.update(title, text, "Notes");
         }
     }
 

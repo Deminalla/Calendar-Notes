@@ -15,8 +15,8 @@ public class DB {
         return conn;
     }
 
-    public void insert(String title, String text) {
-        String sql = "INSERT INTO Notes(Title,TextField) VALUES(?,?)"; // ? are values that we will initialize later
+    public void insert(String title, String text, String tableName) {
+        String sql = "INSERT INTO " + tableName + " (Title,TextField) VALUES(?,?)"; // ? are values that we will initialize later
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -28,8 +28,8 @@ public class DB {
         }
     }
 
-    public void update(String title, String text){
-        String sql = "UPDATE Notes SET Textfield = ? WHERE Title = ?";
+    public void update(String title, String text, String tableName){
+        String sql = "UPDATE " + tableName + " SET Textfield = ? WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, text);
