@@ -62,7 +62,6 @@ public class Controller implements Initializable {
 
         calendarNoteList.putAll(calendarNotesInfo.selectAll("CalendarNotes"));
 
-
         Collections.addAll(list, b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37);
         LocalDate currentdate = LocalDate.now();
         int currentMonth = currentdate.getMonthValue();
@@ -82,12 +81,14 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 printCalendarMonthYear((Integer) number2+1, yearBox.getValue(), list);
+                textCN.clear(); // clear so when changing month/year, the textArea doesn't stay the same until you pick a date
             }
         });
         yearBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 printCalendarMonthYear(monthBox.getValue().getValue(),(Integer) number2+1970, list);
+                textCN.clear();
             }
         });
     }
