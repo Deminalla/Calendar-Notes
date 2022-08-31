@@ -14,11 +14,11 @@
     <tabs>
         <Tab text="Calendar">
             <content>
-                <AnchorPane fx:id="anc" minHeight="0.00" minWidth="0.0" prefHeight="371.0" prefWidth="660.0">
+                <AnchorPane minHeight="0.00" minWidth="0.0" prefHeight="371.0" prefWidth="660.0">
                     <children>
                         <Label layoutX="107.0" layoutY="31.0" text="Year" />
                         <Label layoutX="257.0" layoutY="30.0" text="Month" />
-                        <TextArea layoutX="354.0" layoutY="77.0" prefHeight="278.0" prefWidth="270.0" />
+                        <TextArea fx:id="textCN" layoutX="354.0" layoutY="77.0" prefHeight="278.0" prefWidth="270.0" />
                         <Button fx:id="b1" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b3" layoutX="107.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b4" layoutX="150.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
@@ -26,9 +26,14 @@
                         <Button fx:id="b5" layoutX="193.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b6" layoutX="236.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b7" layoutX="279.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
+<<<<<<< HEAD
                         <Button layoutX="375.0" layoutY="27.0" mnemonicParsing="false" text="Create" />
                         <Button layoutX="436.0" layoutY="27.0" mnemonicParsing="false" text="Update" />
                         <Button layoutX="500.0" layoutY="27.0" mnemonicParsing="false" text="Delete" />
+=======
+                        <Button layoutX="426.0" layoutY="26.0" mnemonicParsing="false" onAction="#createCalendarNode" text="Add" />
+                        <Button layoutX="500.0" layoutY="27.0" mnemonicParsing="false" onAction="#deleteCalendarNote" text="Delete" />
+>>>>>>> Deniza
                         <Button fx:id="b8" layoutX="21.0" layoutY="131.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b9" layoutX="64.0" layoutY="131.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b10" layoutX="107.0" layoutY="131.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
