@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class DB {
     private Connection connect() {
-        String url = "jdbc:sqlite:Cal.db"; // SQLite connection string
+        String url = "jdbc:sqlite:src\\main\\resources\\Cal.db"; // SQLite connection string
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
