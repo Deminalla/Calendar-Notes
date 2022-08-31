@@ -12,6 +12,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("project.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add("calendar_buttons.css");
         stage.setTitle("NoteMe");
         stage.setScene(scene);
         stage.show();

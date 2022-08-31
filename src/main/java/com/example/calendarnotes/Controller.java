@@ -3,12 +3,11 @@ package com.example.calendarnotes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -34,6 +33,9 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField titleN;
+
+    @FXML
+    private ColorPicker color;
 
     @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
@@ -117,11 +119,18 @@ public class Controller implements Initializable {
     @FXML
     void Button(ActionEvent event) {
         for (Button button:list) {
-            button.setStyle("-fx-border-color: black;");
+            button.getStyleClass().removeAll("active");
+            button.getStyleClass().add("button");
         }
         Object node = event.getSource();
         Button b = (Button)node;
-        b.setStyle("-fx-border-color: #ff396e;");
+        b.getStyleClass().add("active");
+        color.setOnAction(new EventHandler() {
+            @FXML
+            public void handle(Event t) {
+                b.setStyle("-fx-background-color: "+color.getValue().toString().replace("0x", "#")+";");
+            }
+        });
     }
 
 
