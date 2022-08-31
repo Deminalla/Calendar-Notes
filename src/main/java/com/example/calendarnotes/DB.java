@@ -51,8 +51,8 @@ public class DB {
         }
     }
 
-    public HashMap<String, String> selectAll(){
-        String sql = "SELECT Title, TextField FROM Notes";
+    public HashMap<String, String> selectAll(String tableName){
+        String sql = "SELECT Title, TextField FROM " + tableName;
         HashMap<String, String> noteList = new HashMap<>();
 
         try (Connection conn = this.connect();
