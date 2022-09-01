@@ -40,6 +40,18 @@ public class DB {
         }
     }
 
+    public void updateTitle(String oldTitle, String newTitle, String tableName){
+        String sql = "UPDATE " + tableName + " SET Title = ? WHERE Title = ?";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newTitle);
+            pstmt.setString(2, oldTitle);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void remove(String title, String tableName){
         String sql = "DELETE FROM " + tableName + " WHERE Title = ?";
         try (Connection conn = this.connect();

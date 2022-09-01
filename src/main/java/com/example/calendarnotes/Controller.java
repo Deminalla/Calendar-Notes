@@ -49,6 +49,7 @@ public class Controller implements Initializable {
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
     private List<Button> list = new ArrayList<>();
     Button currentButton = new Button(); // keep track of which day button was clicked last
+    String currentTitle = null;
 
     Month[] monthList = Month.values();
     List<Integer> yearList = IntStream.range(1970, 2023).boxed().collect(Collectors.toList());
@@ -182,12 +183,14 @@ public class Controller implements Initializable {
     void createNote(ActionEvent event) {
         clearWarnings();
         String title = titleN.getText();
+        currentTitle = title;
         if(title != null && !(title.isEmpty())) {
             String text = textN.getText();
             if (!noteList.containsKey(title)) {
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
                 notesInfo.insert(title, text, "Notes");
+                titleBox.setValue(title);
             } else {
                 noteList.put(title, text);
                 notesInfo.update(title, text, "Notes");
@@ -199,6 +202,7 @@ public class Controller implements Initializable {
 
     public void retrieveNote(ActionEvent event){
         String title = titleBox.getValue();
+        currentTitle = title;
         titleN.setText(title);
         textN.setText(noteList.get(title));
     }
@@ -209,6 +213,7 @@ public class Controller implements Initializable {
         String title = titleN.getText();
         noteList.remove(title);
         titleBox.getItems().remove(title);
+        titleBox.setValue(null);
         notesInfo.remove(title, "Notes");
 
         textN.clear();
@@ -216,10 +221,25 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void clear(ActionEvent event) {
+    void changeTitle(ActionEvent event) {
         clearWarnings();
-        titleN.clear();
-        textN.clear();
+        String title = titleN.getText();
+
+        if(title != null && !(title.isEmpty())) {
+            String text = textN.getText();
+            if (!noteList.containsKey(title)) {
+                noteList.put(title, text);
+                titleBox.getItems().addAll(title);
+                titleBox.getItems().remove(currentTitle);
+                notesInfo.updateTitle(currentTitle, title, "Notes");
+                titleBox.setValue(title);
+            } else {
+                warningN.setText("Title already exists");
+            }
+        } else {
+            warningN.setText("Title is empty");
+        }
+        currentTitle = title;
     }
 
     @FXML
@@ -245,6 +265,14 @@ public class Controller implements Initializable {
                 warningCN.setText("Text is empty");
             }
         }
+    }
+
+    @FXML
+    void clear(ActionEvent event) {
+        clearWarnings();
+        titleBox.setValue(null); // stops showing the current title
+        titleN.clear();
+        textN.clear();
     }
     public void clearWarnings(){
         warningN.setText("");
