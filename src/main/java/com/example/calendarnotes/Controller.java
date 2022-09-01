@@ -1,24 +1,28 @@
 package com.example.calendarnotes;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.itextpdf.text.*;
+import javafx.beans.value.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.io.FileNotFoundException;
+import java.time.*;
 
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Controller implements Initializable {
+
+    @FXML
+    private Tab tabCN;
+
+    @FXML
+    private Tab tabN;
 
     @FXML
     private ChoiceBox<Integer> yearBox;
@@ -39,6 +43,9 @@ public class Controller implements Initializable {
     private TextArea textCN;
 
     @FXML
+    private Label warningN, warningCN; // place to show warnings to user
+
+    @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
     private List<Button> list = new ArrayList<>();
     Button currentButton = new Button(); // keep track of which day button was clicked last
@@ -52,6 +59,9 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        warningN.setStyle("-fx-text-fill: red;");
+        warningCN.setStyle("-fx-text-fill: red;");
+
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
@@ -122,6 +132,7 @@ public class Controller implements Initializable {
 
     @FXML
     void Button(ActionEvent event){
+        clearWarnings();
         for (Button button:list) {
             button.setStyle("-fx-border-color: black;");
         }
@@ -141,6 +152,7 @@ public class Controller implements Initializable {
 
     @FXML
     void createCalendarNode (ActionEvent event) {
+        clearWarnings();
         DateInfo dateContr = new DateInfo();
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
 
@@ -157,26 +169,31 @@ public class Controller implements Initializable {
 
     @FXML
     void deleteCalendarNote(ActionEvent event) {
+        clearWarnings();
         DateInfo dateContr = new DateInfo();
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
 
         calendarNoteList.remove(dateString);
-        calendarNotesInfo.remove(dateString);
+        calendarNotesInfo.remove(dateString, "CalendarNotes");
         textCN.clear();
     }
 
     @FXML
     void createNote(ActionEvent event) {
+        clearWarnings();
         String title = titleN.getText();
-        String text = textN.getText();
-        if(!noteList.containsKey(title)){
-            noteList.put(title, text);
-            titleBox.getItems().addAll(title);
-            notesInfo.insert(title, text, "Notes");
-        }
-        else{
-            noteList.put(title, text);
-            notesInfo.update(title, text, "Notes");
+        if(title != null && !(title.isEmpty())) {
+            String text = textN.getText();
+            if (!noteList.containsKey(title)) {
+                noteList.put(title, text);
+                titleBox.getItems().addAll(title);
+                notesInfo.insert(title, text, "Notes");
+            } else {
+                noteList.put(title, text);
+                notesInfo.update(title, text, "Notes");
+            }
+        } else {
+            warningN.setText("Title is empty");
         }
     }
 
@@ -188,10 +205,11 @@ public class Controller implements Initializable {
 
     @FXML
     void deleteNote(ActionEvent event){
+        clearWarnings();
         String title = titleN.getText();
         noteList.remove(title);
         titleBox.getItems().remove(title);
-        notesInfo.remove(title);
+        notesInfo.remove(title, "Notes");
 
         textN.clear();
         titleN.clear();
@@ -199,7 +217,37 @@ public class Controller implements Initializable {
 
     @FXML
     void clear(ActionEvent event) {
+        clearWarnings();
         titleN.clear();
         textN.clear();
+    }
+
+    @FXML
+    void exportToPDF(ActionEvent event) throws DocumentException, FileNotFoundException {
+        clearWarnings();
+        if (tabN.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
+            if ((!titleN.getText().isEmpty()) && (!textN.getText().isEmpty())) {
+                String title = titleN.getText();
+                String text = textN.getText();
+                PDF pdfN = new PDF();
+                pdfN.exportToPDF(title, text);
+            } else {
+                warningN.setText("Title or text is empty");
+            }
+        } else if (tabCN.isSelected()){
+            if (textCN.getText() != null &&  !(textCN.getText().isEmpty())) {
+                DateInfo date= new DateInfo();
+                String dateString = date.dateFormat(currentButton, monthBox, yearBox);
+                String text = textCN.getText();
+                PDF pdfN = new PDF();
+                pdfN.exportToPDF(dateString, text);
+            } else {
+                warningCN.setText("Text is empty");
+            }
+        }
+    }
+    public void clearWarnings(){
+        warningN.setText("");
+        warningCN.setText("");
     }
 }

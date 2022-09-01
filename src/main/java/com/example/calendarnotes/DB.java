@@ -40,8 +40,8 @@ public class DB {
         }
     }
 
-    public void remove(String title){
-        String sql = "DELETE FROM Notes WHERE Title = ?";
+    public void remove(String title, String tableName){
+        String sql = "DELETE FROM " + tableName + " WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, title);

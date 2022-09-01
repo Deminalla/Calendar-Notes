@@ -32,7 +32,7 @@ public class DBCalendar {
     }
 
     public void update(String title, String text, String Date_color){
-        String sql = "UPDATE CalendarNotes SET Textfield = ?, Date_color = ?, WHERE Title = ?";
+        String sql = "UPDATE CalendarNotes SET Textfield = ?, Date_color = ? WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, text);
@@ -59,13 +59,12 @@ public class DBCalendar {
         String sql = "SELECT Title, TextField, Date_color FROM CalendarNotes";
         HashMap<String, List<String>> noteList = new HashMap<>();
 
-        List<String> list_of_props = new ArrayList<String>();
-
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)){
 
             while (rs.next()) { // loop through the result set
+                List<String> list_of_props = new ArrayList<String>();
                 String title = rs.getString("Title");
                 String text = rs.getString("TextField");
                 String color = rs.getString("Date_color");
