@@ -60,8 +60,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        warningN.setStyle("-fx-text-fill: red;");
-        warningCN.setStyle("-fx-text-fill: red;");
 
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
