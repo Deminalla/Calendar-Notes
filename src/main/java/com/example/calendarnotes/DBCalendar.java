@@ -32,7 +32,7 @@ public class DBCalendar {
     }
 
     public void update(String title, String text, String Date_color){
-        String sql = "UPDATE CalendarNotes SET Textfield = ?, Date_color = ?, WHERE Title = ?";
+        String sql = "UPDATE CalendarNotes SET Textfield = ?, Date_color = ? WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, text);
@@ -45,7 +45,7 @@ public class DBCalendar {
     }
 
     public void remove(String title){
-        String sql = "DELETE FROM Notes WHERE Title = ?";
+        String sql = "DELETE FROM CalendarNotes WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, title);
@@ -56,20 +56,25 @@ public class DBCalendar {
     }
 
     public HashMap<String, List<String>> selectAll(){
-        String sql = "SELECT Title, TextField FROM CalendarNotes";
+        String sql = "SELECT Title, TextField, Date_color FROM CalendarNotes";
         HashMap<String, List<String>> noteList = new HashMap<>();
-
-        List<String> list_of_props = new ArrayList<String>();
 
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)){
 
             while (rs.next()) { // loop through the result set
+                List<String> list_of_props = new ArrayList<String>();
                 String title = rs.getString("Title");
                 String text = rs.getString("TextField");
-                String color = rs.getString("Date_color");
-                Collections.addAll(list_of_props,text,color);
+                String color = "";
+                if (!(rs.getString("Date_color") == null)){
+                    color = rs.getString("Date_color");
+                }else{
+                    color = "0xffffffff";
+                }
+                list_of_props.add(text);
+                list_of_props.add(color);
                 noteList.put(title,list_of_props);
             }
         } catch (SQLException e) {
