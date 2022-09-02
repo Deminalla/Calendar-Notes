@@ -14,15 +14,18 @@
     <orderEntry type="library" name="itextpdf-5.5.13.3" level="project" />
     <orderEntry type="library" name="sqlite-jdbc-3.39.2.1" level="project" />
     <orderEntry type="library" name="itextpdf-5.5.13.3" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:17.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:17.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:17.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:20-ea+2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:20-ea+2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.1" level="project" />
