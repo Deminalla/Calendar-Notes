@@ -10,15 +10,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="649.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendarnotes.Controller">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="674.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendarnotes.Controller">
     <tabs>
-        <Tab text="Calendar">
+        <Tab fx:id="tabCN" text="Calendar">
             <content>
                 <AnchorPane minHeight="0.00" minWidth="0.0" prefHeight="371.0" prefWidth="660.0">
                     <children>
                         <Label layoutX="107.0" layoutY="31.0" text="Year" />
                         <Label layoutX="257.0" layoutY="30.0" text="Month" />
-                        <TextArea fx:id="textCN" layoutX="354.0" layoutY="57.0" prefHeight="278.0" prefWidth="270.0" />
+                        <TextArea fx:id="textCN" layoutX="353.0" layoutY="88.0" prefHeight="252.0" prefWidth="286.0" />
                         <Button fx:id="b1" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b3" layoutX="107.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b4" layoutX="150.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
@@ -26,8 +26,8 @@
                         <Button fx:id="b5" layoutX="193.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b6" layoutX="236.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b7" layoutX="279.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
-                        <Button layoutX="426.0" layoutY="26.0" mnemonicParsing="false" onAction="#createCalendarNode" text="Add" />
-                        <Button layoutX="500.0" layoutY="27.0" mnemonicParsing="false" onAction="#deleteCalendarNote" text="Delete" />
+                        <Button layoutX="358.0" layoutY="26.0" mnemonicParsing="false" onAction="#createCalendarNode" text="Add" />
+                        <Button layoutX="412.0" layoutY="26.0" mnemonicParsing="false" onAction="#deleteCalendarNote" text="Delete" />
                         <Button fx:id="b8" layoutX="21.0" layoutY="131.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b9" layoutX="64.0" layoutY="131.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b10" layoutX="107.0" layoutY="131.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
@@ -60,7 +60,9 @@
                         <Button fx:id="b37" layoutX="64.0" layoutY="303.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <ChoiceBox fx:id="yearBox" layoutX="30.0" layoutY="26.0" prefHeight="26.0" prefWidth="66.0" />
                         <ChoiceBox fx:id="monthBox" layoutX="156.0" layoutY="26.0" prefHeight="26.0" prefWidth="89.0" />
-                  <ColorPicker fx:id="color" layoutX="562.0" layoutY="27.0" prefHeight="25.0" prefWidth="48.0" />
+                  <Button layoutX="477.0" layoutY="27.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
+                  <Label fx:id="warningCN" layoutX="377.0" layoutY="60.0" prefHeight="18.0" prefWidth="222.0" style="-fx-text-fill: red;" />
+                  <ColorPicker fx:id="color" layoutX="586.0" layoutY="27.0" prefHeight="25.0" prefWidth="48.0" />
                   <Label layoutX="34.0" layoutY="69.0" text="Mo" />
                   <Label layoutX="79.0" layoutY="69.0" text="Tu" />
                   <Label layoutX="120.0" layoutY="69.0" text="We" />
@@ -68,20 +70,23 @@
                   <Label layoutX="209.0" layoutY="69.0" text="Fr" />
                   <Label layoutX="251.0" layoutY="69.0" text="Sa" textFill="RED" />
                   <Label layoutX="294.0" layoutY="69.0" text="Su" textFill="RED" />
-                  <Label fx:id="date_text" layoutX="536.0" layoutY="338.0" opacity="0.5" prefHeight="17.0" prefWidth="88.0" />
+                  <Label fx:id="date_text" layoutX="542.0" layoutY="346.0" opacity="0.5" prefHeight="17.0" prefWidth="88.0" />
                     </children></AnchorPane>
             </content>
         </Tab>
-        <Tab text="Notes">
+        <Tab fx:id="tabN" text="Notes">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="663.0">
                     <children>
                         <Button layoutX="581.0" layoutY="109.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
                         <Button layoutX="581.0" layoutY="66.0" mnemonicParsing="false" onAction="#clear" text="New" />
-                        <Button layoutX="575.0" layoutY="155.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
+                        <Button layoutX="576.0" layoutY="154.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
                         <ChoiceBox fx:id="titleBox" layoutX="249.0" layoutY="27.0" prefHeight="26.0" prefWidth="174.0" />
                         <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
                         <TextArea fx:id="textN" layoutX="28.0" layoutY="66.0" prefHeight="286.0" prefWidth="516.0" />
+                  <Button layoutX="557.0" layoutY="238.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
+                  <Label fx:id="warningN" layoutX="447.0" layoutY="32.0" prefHeight="18.0" prefWidth="190.0" style="-fx-text-fill: red;" />
+                  <Button layoutX="561.0" layoutY="196.0" mnemonicParsing="false" onAction="#changeTitle" text="Change title" />
                     </children></AnchorPane>
             </content>
         </Tab>

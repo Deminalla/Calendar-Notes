@@ -5,7 +5,7 @@ import javafx.scene.control.ChoiceBox;
 
 import java.time.Month;
 
-public class DateInfo {
+public class DateInfo { // created this so there's not too much duplicate (more like quadruplicate) code
 
     public String dateFormat(Button currentButton, ChoiceBox<Month> monthBox, ChoiceBox<Integer> yearBox){
         int currentDay = Integer.parseInt(currentButton.getText());
