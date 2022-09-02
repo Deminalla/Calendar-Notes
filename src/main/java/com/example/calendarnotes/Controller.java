@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.*;
@@ -18,7 +19,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javafx.scene.input.TouchPoint;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
+
 public class Controller implements Initializable {
+
+    //web stuff
+    @FXML
+    private WebView webView;
+
+    private WebEngine engine;
+    //
 
     @FXML
     private Tab tabCN, tabN;
@@ -31,9 +44,6 @@ public class Controller implements Initializable {
 
     @FXML
     private ChoiceBox<String> titleBox;
-
-    @FXML
-    private TextArea textN;
 
     @FXML
     private TextField titleN;
@@ -67,6 +77,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //web stuff
+        engine = webView.getEngine();
+        loadPage();
+        //
+
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
@@ -196,7 +212,7 @@ public class Controller implements Initializable {
 
         String text = textCN.getText();
         String colour = color.getValue().toString();
-        List<String> list_of_props = new ArrayList<String>();
+        List<String> list_of_props = new ArrayList<>();
         Collections.addAll(list_of_props,text,colour);
         currentButton.setStyle("-fx-background-color: "+color.getValue().toString().replace("0x", "#")+";");
         if(!calendarNoteList.containsKey(dateString)){
@@ -226,7 +242,7 @@ public class Controller implements Initializable {
         String title = titleN.getText();
         currentTitle = title;
         if(title != null && !(title.isEmpty())) {
-            String text = textN.getText();
+            String text = getPage();
             if (!noteList.containsKey(title)) {
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
@@ -245,7 +261,7 @@ public class Controller implements Initializable {
         String title = titleBox.getValue();
         currentTitle = title;
         titleN.setText(title);
-        textN.setText(noteList.get(title));
+        setPage(noteList.get(title));
     }
 
     @FXML
@@ -257,7 +273,7 @@ public class Controller implements Initializable {
         titleBox.setValue(null);
         notesInfo.remove(title);
 
-        textN.clear();
+        clearPage();
         titleN.clear();
     }
 
@@ -267,7 +283,7 @@ public class Controller implements Initializable {
         String title = titleN.getText();
 
         if(title != null && !(title.isEmpty())) {
-            String text = textN.getText();
+            String text = getPage();
             if (!noteList.containsKey(title)) {
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
@@ -284,14 +300,14 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void exportToPDF(ActionEvent event) throws DocumentException, FileNotFoundException {
+    void exportToPDF(ActionEvent event) throws DocumentException, IOException {
         clearWarnings();
         if (tabN.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
-            if ((!titleN.getText().isEmpty()) && (!textN.getText().isEmpty())) {
-                String title = titleN.getText();
-                String text = textN.getText();
+            if (!titleN.getText().isEmpty()) {
+                //String title = titleN.getText();
+                String text = getPage();
                 PDF pdfN = new PDF();
-                pdfN.exportToPDF(title, text);
+                pdfN.exportHTMLToPDF(text);
             } else {
                 warningN.setText("Title or text is empty");
             }
@@ -301,7 +317,7 @@ public class Controller implements Initializable {
                 String dateString = date.dateFormat(currentButton, monthBox, yearBox);
                 String text = textCN.getText();
                 PDF pdfN = new PDF();
-                pdfN.exportToPDF(dateString, text);
+                pdfN.exportStringToPDF(dateString, text);
             } else {
                 warningCN.setText("Text is empty");
             }
@@ -313,10 +329,37 @@ public class Controller implements Initializable {
         clearWarnings();
         titleBox.setValue(null); // stops showing the current title
         titleN.clear();
-        textN.clear();
+        clearPage();
     }
     public void clearWarnings(){
         warningN.setText("");
         warningCN.setText("");
     }
+    @FXML
+    void loadPage() {
+
+        File f = new File("src\\main\\resources\\index.html");
+        engine.load(f.toURI().toString());
+
+    }
+
+    @FXML
+    void setPage(String html){
+        clearPage();
+        engine.executeScript("set('"+html+"')");
+
+    }
+    @FXML
+    String getPage(){
+        String html = (String)engine.executeScript("get()");
+        return html;
+
+    }
+
+    @FXML
+    void clearPage(){
+        engine.executeScript("$('#summernote').summernote('reset');");
+    }
+
+
 }
