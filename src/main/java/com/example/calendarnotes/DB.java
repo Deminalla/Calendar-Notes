@@ -1,5 +1,4 @@
 package com.example.calendarnotes;
-
 import java.sql.*;
 import java.util.HashMap;
 
@@ -17,7 +16,6 @@ public class DB {
 
     public void insert(String title, String text, String tableName) {
         String sql = "INSERT INTO " + tableName + " (Title,TextField) VALUES(?,?)"; // ? are values that we will initialize later
-
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, title);
@@ -90,7 +88,6 @@ public class DB {
         app.insert("Yes", "lmao actually no i lied");
         app.insert("Semifinished Goods", "what is this");
         app.insert("Finished Goods", "nooooo");
-
         app.select("Semifinished Goods");
         */
     }

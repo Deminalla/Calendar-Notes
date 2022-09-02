@@ -45,7 +45,7 @@ public class DBCalendar {
     }
 
     public void remove(String title){
-        String sql = "DELETE FROM Notes WHERE Title = ?";
+        String sql = "DELETE FROM CalendarNotes WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, title);
@@ -67,8 +67,14 @@ public class DBCalendar {
                 List<String> list_of_props = new ArrayList<String>();
                 String title = rs.getString("Title");
                 String text = rs.getString("TextField");
-                String color = rs.getString("Date_color");
-                Collections.addAll(list_of_props,text,color);
+                String color = "";
+                if (!(rs.getString("Date_color") == null)){
+                    color = rs.getString("Date_color");
+                }else{
+                    color = "0xffffffff";
+                }
+                list_of_props.add(text);
+                list_of_props.add(color);
                 noteList.put(title,list_of_props);
             }
         } catch (SQLException e) {
