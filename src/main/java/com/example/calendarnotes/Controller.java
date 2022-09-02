@@ -42,8 +42,10 @@ public class Controller implements Initializable {
 
     @FXML
     private TextArea textCN;
+    
     @FXML
     private ColorPicker color;
+    
     @FXML
     private  Label date_text;
 
