@@ -303,8 +303,8 @@ public class Controller implements Initializable {
         currentTitle = title;
     }
 
-//    @FXML
-//    void exportToPDF(ActionEvent event) throws DocumentException, FileNotFoundException {
+    @FXML
+    void exportToPDF(ActionEvent event) throws DocumentException, FileNotFoundException {
 //        clearWarnings();
 //        if (tabN.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
 //            if ((!titleN.getText().isEmpty()) && (!textN.getText().isEmpty())) {
@@ -326,7 +326,7 @@ public class Controller implements Initializable {
 //                warningCN.setText("Text is empty");
 //            }
 //        }
-//    }
+    }
 
     @FXML
     void clear(ActionEvent event) {
