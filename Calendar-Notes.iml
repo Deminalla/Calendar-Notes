@@ -14,6 +14,7 @@
     <orderEntry type="library" name="itextpdf-5.5.13.3" level="project" />
     <orderEntry type="library" name="sqlite-jdbc-3.39.2.1" level="project" />
     <orderEntry type="library" name="itextpdf-5.5.13.3" level="project" />
+    <orderEntry type="library" name="kernel-7.2.3" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17.0.1" level="project" />
@@ -31,5 +32,20 @@
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.39.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.openhtmltopdf:openhtmltopdf-jsoup-dom-converter:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:html2pdf:4.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:forms:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:layout:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:svg:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:styled-xml-parser:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.36" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:kernel:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:io:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:commons:7.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.70" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcutil-jdk15on:1.70" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.70" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.13.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.13.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.13.3" level="project" />
   </component>
 </module>
