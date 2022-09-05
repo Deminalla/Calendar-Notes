@@ -61,6 +61,15 @@ public class Controller implements Initializable {
     private Label warningN, warningCN; // place to show warnings to user
 
     @FXML
+    private ListView<String> listView;
+
+    @FXML
+    private TextField searchBar;
+
+    @FXML
+    private TextArea searchResult;
+
+    @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
     private List<Button> list = new ArrayList<>();
     Button currentButton = new Button(); // keep track of which day button was clicked last
@@ -94,6 +103,7 @@ public class Controller implements Initializable {
         calendarNoteList.putAll(DBCalendar.selectAll());
 
         textCN.setWrapText(true); // will get rid of horizontal scrollbar and automatically continue text to the next line
+        searchResult.setWrapText(true);
 
 
         Collections.addAll(list, b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37);
@@ -127,6 +137,17 @@ public class Controller implements Initializable {
                 yearBox.setValue((Integer) number2+1970);
                 printCalendarMonthYear(monthBox.getValue().getValue(),(Integer) number2+1970, list);
                 textCN.clear();
+            }
+        });
+
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                String selectedDate = listView.getSelectionModel().getSelectedItem();
+                if (selectedDate!=null) { // this method gets called when trying to unselect item so it can be null in that case
+                    String textResult = calendarNoteList.get(selectedDate).get(0);
+                    searchResult.setText(textResult);
+                }
             }
         });
     }
@@ -359,6 +380,26 @@ public class Controller implements Initializable {
     void clearPage(){
         engine.executeScript("$('#summernote').summernote('reset');");
     }
+
+
+    //search
+    @FXML
+    void searchCal(ActionEvent event) {
+        List<String> selectedItemsCopy = new ArrayList<String>(listView.getSelectionModel().getSelectedItems());
+        listView.getItems().removeAll(selectedItemsCopy);
+        listView.getItems().clear();
+        searchResult.clear();
+
+        String searchText = searchBar.getText();
+        for(Map.Entry pair: calendarNoteList.entrySet()){
+            if(calendarNoteList.get(pair.getKey()).get(0) != null){
+                if(calendarNoteList.get(pair.getKey()).get(0).contains(searchText)){
+                    listView.getItems().add(pair.getKey().toString());
+                }
+            }
+        }
+    }
+
 
 
 }

@@ -3,7 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -15,7 +17,7 @@
     <tabs>
         <Tab fx:id="tabCN" text="Calendar">
             <content>
-                <AnchorPane minHeight="0.00" minWidth="0.0" prefHeight="371.0" prefWidth="660.0">
+                <AnchorPane minHeight="0.00" minWidth="0.0" prefHeight="529.0" prefWidth="674.0">
                     <children>
                         <Label layoutX="107.0" layoutY="31.0" text="Year" />
                         <Label layoutX="257.0" layoutY="30.0" text="Month" />
@@ -75,6 +77,19 @@
                     </children></AnchorPane>
             </content>
         </Tab>
+      <Tab text="Search">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <DatePicker layoutX="372.0" layoutY="37.0" />
+                  <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="84.0" prefHeight="239.0" prefWidth="191.0" />
+                  <TextArea fx:id="searchResult" layoutX="294.0" layoutY="84.0" prefHeight="239.0" prefWidth="330.0" />
+                  <TextField fx:id="searchBar" layoutX="30.0" layoutY="36.0" prefHeight="26.0" prefWidth="191.0" promptText="the text you're searching" />
+                  <Button layoutX="240.0" layoutY="36.0" mnemonicParsing="false" onAction="#searchCal" text="Search" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
         <Tab fx:id="tabN" text="Notes">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="663.0">
@@ -84,7 +99,7 @@
                         <Button layoutX="576.0" layoutY="154.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
                         <ChoiceBox fx:id="titleBox" layoutX="249.0" layoutY="27.0" prefHeight="26.0" prefWidth="174.0" />
                         <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
-                        <WebView fx:id="webView" layoutX="28.0" layoutY="64.0" prefHeight="289.0" prefWidth="516.0"/>
+                        <WebView fx:id="webView" layoutX="28.0" layoutY="64.0" prefHeight="289.0" prefWidth="516.0" />
                   <Button layoutX="557.0" layoutY="238.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
                   <Label fx:id="warningN" layoutX="447.0" layoutY="32.0" prefHeight="18.0" prefWidth="190.0" style="-fx-text-fill: red;" />
                   <Button layoutX="561.0" layoutY="196.0" mnemonicParsing="false" onAction="#changeTitle" text="Change title" />
