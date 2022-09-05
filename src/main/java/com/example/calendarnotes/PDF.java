@@ -20,17 +20,17 @@ public class PDF {
             PdfWriter docWriter = PdfWriter.getInstance(doc, new FileOutputStream(file + ".pdf"));
             doc.open();
 
-            Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0)); // random font
-            Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+            Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
+            Font textFont = new Font(Font.FontFamily.HELVETICA, 12);
 
             Paragraph titleOfText = new Paragraph();
-            titleOfText.add(new Paragraph(title, bfBold12));
+            titleOfText.add(new Paragraph(title, titleFont));
             titleOfText.add(new Paragraph(" "));
             titleOfText.add(new Paragraph(" "));
             doc.add(titleOfText);
 
             Paragraph preface = new Paragraph();
-            preface.add(new Paragraph(text, bf12));
+            preface.add(new Paragraph(text, textFont));
             doc.add(preface);
 
             doc.newPage();

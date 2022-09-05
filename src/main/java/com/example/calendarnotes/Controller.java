@@ -93,6 +93,7 @@ public class Controller implements Initializable {
 
         calendarNoteList.putAll(DBCalendar.selectAll());
 
+        textCN.setWrapText(true); // will get rid of horizontal scrollbar and automatically continue text to the next line
 
 
         Collections.addAll(list, b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37);
@@ -258,10 +259,10 @@ public class Controller implements Initializable {
     }
 
     public void retrieveNote(ActionEvent event){
-        String title = titleBox.getValue();
-        currentTitle = title;
-        titleN.setText(title);
-        setPage(noteList.get(title));
+            String title = titleBox.getValue();
+            currentTitle = title;
+            titleN.setText(title);
+            setPage(noteList.get(title));
     }
 
     @FXML
@@ -337,10 +338,8 @@ public class Controller implements Initializable {
     }
     @FXML
     void loadPage() {
-
         File f = new File("src\\main\\resources\\index.html");
         engine.load(f.toURI().toString());
-
     }
 
     @FXML
