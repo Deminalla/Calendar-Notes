@@ -1,4 +1,6 @@
 package com.example.calendarnotes;
+import javafx.scene.Cursor;
+
 import java.sql.*;
 import java.util.HashMap;
 
@@ -38,9 +40,24 @@ public class DB {
         }
     }
 
+    public int getProfilesCount() {
+        String sql = "SELECT  * FROM  notes";
+        int count =0;
+        try (Connection conn = this.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)){
+            while (rs.next()) { // loop through the result set
+                count++;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
     public void updateTitle(String oldTitle, String newTitle, String tableName){
         String sql = "UPDATE " + tableName + " SET Title = ? WHERE Title = ?";
         try (Connection conn = this.connect();
+
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, newTitle);
             pstmt.setString(2, oldTitle);

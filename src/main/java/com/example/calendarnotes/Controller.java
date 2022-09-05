@@ -3,16 +3,15 @@ package com.example.calendarnotes;
 import com.itextpdf.text.*;
 import javafx.beans.value.*;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
 import java.time.*;
-import java.sql.SQLOutput;
 
 import java.net.URL;
 import java.util.*;
@@ -46,13 +45,16 @@ public class Controller implements Initializable {
     private ColorPicker color;
     @FXML
     private  Label date_text;
+    @FXML
+    private  ScrollPane notes_area;
+
 
     @FXML
     private Label warningN, warningCN; // place to show warnings to user
 
     @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
-    private List<Button> list = new ArrayList<>();
+    final private List<Button> list = new ArrayList<>();
     Button currentButton = new Button(); // keep track of which day button was clicked last
     String currentTitle = null;
 
@@ -62,14 +64,25 @@ public class Controller implements Initializable {
     HashMap<String, List<String>> calendarNoteList = new HashMap<>();
     DB notesInfo = new DB();
 
-    DBCalendar DBCalendar = new DBCalendar();
+    Stickey_Notes stickey_notes = new Stickey_Notes();
 
+    DBCalendar DBCalendar = new DBCalendar();
+    GridPane grid = new GridPane();
+
+    private  int row,column = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
+
+        notes_area.setContent(stickey_notes.notes_init(grid));
+
+        grid.setPadding(new Insets(5));
+        grid.setHgap(5);
+        grid.setVgap(5);
+
 
         noteList.putAll(notesInfo.selectAll("Notes")); // add data from database
         Set<String> keys = noteList.keySet();
@@ -112,6 +125,10 @@ public class Controller implements Initializable {
                 textCN.clear();
             }
         });
+    }
+    @FXML
+    private void add() {
+        notes_area.setContent(stickey_notes.add(grid));
     }
 
 
