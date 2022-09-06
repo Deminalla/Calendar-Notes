@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.*;
 
@@ -80,7 +79,6 @@ public class Controller implements Initializable {
     HashMap<String, String> noteList = new HashMap<>();
     HashMap<String, List<String>> calendarNoteList = new HashMap<>();
     DB notesInfo = new DB();
-
     DBCalendar DBCalendar = new DBCalendar();
 
 
@@ -145,6 +143,7 @@ public class Controller implements Initializable {
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 String selectedDate = listView.getSelectionModel().getSelectedItem();
                 if (selectedDate!=null) { // this method gets called when trying to unselect item so it can be null in that case
+
                     String textResult = calendarNoteList.get(selectedDate).get(0);
                     searchResult.setText(textResult);
                 }
@@ -373,7 +372,6 @@ public class Controller implements Initializable {
     String getPage(){
         String html = (String)engine.executeScript("get()");
         return html;
-
     }
 
     @FXML
@@ -382,7 +380,6 @@ public class Controller implements Initializable {
     }
 
 
-    //search
     @FXML
     void searchCal(ActionEvent event) {
         List<String> selectedItemsCopy = new ArrayList<String>(listView.getSelectionModel().getSelectedItems());
@@ -399,7 +396,5 @@ public class Controller implements Initializable {
             }
         }
     }
-
-
 
 }
