@@ -14,6 +14,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("project.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add("calendar_buttons.css");
+        scene.getStylesheets().add("searchList.css");
         stage.setTitle("NoteMe");
         stage.setScene(scene);
         //stage.getIcons().add(new Image("src/main/resources/icon.png"));

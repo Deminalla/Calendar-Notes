@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javafx.scene.input.TouchPoint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -138,12 +137,11 @@ public class Controller implements Initializable {
             }
         });
 
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 String selectedDate = listView.getSelectionModel().getSelectedItem();
                 if (selectedDate!=null) { // this method gets called when trying to unselect item so it can be null in that case
-
                     String textResult = calendarNoteList.get(selectedDate).get(0);
                     searchResult.setText(textResult);
                 }
@@ -382,19 +380,33 @@ public class Controller implements Initializable {
 
     @FXML
     void searchCal(ActionEvent event) {
-        List<String> selectedItemsCopy = new ArrayList<String>(listView.getSelectionModel().getSelectedItems());
+        List<String> selectedItemsCopy = new ArrayList<>(listView.getSelectionModel().getSelectedItems());
         listView.getItems().removeAll(selectedItemsCopy);
         listView.getItems().clear();
         searchResult.clear();
 
         String searchText = searchBar.getText();
-        for(Map.Entry pair: calendarNoteList.entrySet()){
+        for(Map.Entry<String, List<String>> pair: calendarNoteList.entrySet()){
             if(calendarNoteList.get(pair.getKey()).get(0) != null){
                 if(calendarNoteList.get(pair.getKey()).get(0).contains(searchText)){
-                    listView.getItems().add(pair.getKey().toString());
+                    listView.getItems().add(pair.getKey());
                 }
             }
         }
+        listView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-background-color: "+calendarNoteList.get(item).get(1).replace("0x", "#")+";");
+                }
+            }
+        });
     }
 
 }

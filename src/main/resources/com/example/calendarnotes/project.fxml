@@ -84,6 +84,7 @@
                   <TextArea fx:id="searchResult" layoutX="303.0" layoutY="84.0" prefHeight="239.0" prefWidth="330.0" />
                   <TextField fx:id="searchBar" layoutX="30.0" layoutY="36.0" prefHeight="26.0" prefWidth="191.0" promptText="the text you're searching" />
                   <Button layoutX="240.0" layoutY="36.0" mnemonicParsing="false" onAction="#searchCal" text="Search" />
+                  <Label layoutX="38.0" layoutY="331.0" text="DD-MM-YYYY" />
                </children>
             </AnchorPane>
         </content>
