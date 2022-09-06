@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.io.File;
@@ -53,7 +54,7 @@ public class Controller implements Initializable {
     private ColorPicker color;
     
     @FXML
-    private  Label date_text;
+    private Label date_text;
 
     @FXML
     private Label warningN, warningCN; // place to show warnings to user
