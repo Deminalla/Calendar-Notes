@@ -140,9 +140,9 @@ public class Controller implements Initializable {
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                String selectedDate = listView.getSelectionModel().getSelectedItem();
-                if (selectedDate!=null) { // this method gets called when trying to unselect item so it can be null in that case
-                    String textResult = calendarNoteList.get(selectedDate).get(0);
+                //String selectedDate = listView.getSelectionModel().getSelectedItem();
+                if (t1!=null) { // this method gets called when trying to unselect item so it can be null in that case
+                    String textResult = calendarNoteList.get(t1).get(0);
                     searchResult.setText(textResult);
                 }
             }
@@ -191,6 +191,8 @@ public class Controller implements Initializable {
        list.get(20).getStyleClass().add("weekend_red");
        list.get(26).getStyleClass().add("weekend_red");
        list.get(27).getStyleClass().add("weekend_red");
+       list.get(33).getStyleClass().add("weekend_red"); // will color the 5th week
+       list.get(34).getStyleClass().add("weekend_red");
     }
     
     @FXML
@@ -300,10 +302,10 @@ public class Controller implements Initializable {
     void changeTitle(ActionEvent event) {
         clearWarnings();
         String title = titleN.getText();
-
         if(title != null && !(title.isEmpty())) {
             String text = getPage();
             if (!noteList.containsKey(title)) {
+                noteList.remove(currentTitle, text);
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
                 titleBox.getItems().remove(currentTitle);
@@ -374,7 +376,9 @@ public class Controller implements Initializable {
 
     @FXML
     void clearPage(){
-        engine.executeScript("$('#summernote').summernote('reset');");
+        engine.executeScript("$('#SummernoteText').summernote('reset');"); // engine.executeScript("$('#SummernoteText').summernote('code', '');");
+        engine.executeScript("set('<p><br></p>')");
+
     }
 
 
