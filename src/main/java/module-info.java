@@ -3,6 +3,7 @@ module com.example.calendarnotes {
     requires javafx.fxml;
     requires java.sql;
     requires itextpdf;
+    requires javafx.web;
     requires html2pdf;
 
     opens com.example.calendarnotes to javafx.fxml;

@@ -8,7 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.time.*;
 
@@ -18,7 +18,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
+
 public class Controller implements Initializable {
+
+    //web stuff
+    @FXML
+    private WebView webView;
+
+    private WebEngine engine;
+    //
 
     @FXML
     private Tab tabCN, tabN;
@@ -33,9 +44,6 @@ public class Controller implements Initializable {
     private ChoiceBox<String> titleBox;
 
     @FXML
-    private TextArea textN;
-
-    @FXML
     private TextField titleN;
 
     @FXML
@@ -45,10 +53,19 @@ public class Controller implements Initializable {
     private ColorPicker color;
     
     @FXML
-    private  Label date_text;
+    private Label date_text;
 
     @FXML
     private Label warningN, warningCN; // place to show warnings to user
+
+    @FXML
+    private ListView<String> listView;
+
+    @FXML
+    private TextField searchBar;
+
+    @FXML
+    private TextArea searchResult;
 
     @FXML
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37;
@@ -59,14 +76,19 @@ public class Controller implements Initializable {
     Month[] monthList = Month.values();
     List<Integer> yearList = IntStream.range(1970, 2023).boxed().collect(Collectors.toList());
     HashMap<String, String> noteList = new HashMap<>();
-    HashMap<String, List<String>> calendarNoteList = new HashMap<>();
+    static HashMap<String, List<String>> calendarNoteList = new HashMap<>(); // will making this static cause a problem?
     DB notesInfo = new DB();
-
-    DBCalendar DBCalendar = new DBCalendar();
+    static DBCalendar DBCalendar = new DBCalendar(); // will making this static cause a problem?
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //web stuff
+        engine = webView.getEngine();
+        loadPage();
+        //
+
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
@@ -77,6 +99,8 @@ public class Controller implements Initializable {
 
         calendarNoteList.putAll(DBCalendar.selectAll());
 
+        textCN.setWrapText(true); // will get rid of horizontal scrollbar and automatically continue text to the next line
+        searchResult.setWrapText(true);
 
 
         Collections.addAll(list, b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37);
@@ -110,6 +134,17 @@ public class Controller implements Initializable {
                 yearBox.setValue((Integer) number2+1970);
                 printCalendarMonthYear(monthBox.getValue().getValue(),(Integer) number2+1970, list);
                 textCN.clear();
+            }
+        });
+
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                //String selectedDate = listView.getSelectionModel().getSelectedItem();
+                if (t1!=null) { // this method gets called when trying to unselect item so it can be null in that case
+                    String textResult = calendarNoteList.get(t1).get(0);
+                    searchResult.setText(textResult);
+                }
             }
         });
     }
@@ -156,6 +191,8 @@ public class Controller implements Initializable {
        list.get(20).getStyleClass().add("weekend_red");
        list.get(26).getStyleClass().add("weekend_red");
        list.get(27).getStyleClass().add("weekend_red");
+       list.get(33).getStyleClass().add("weekend_red"); // will color the 5th week
+       list.get(34).getStyleClass().add("weekend_red");
     }
     
     @FXML
@@ -196,16 +233,29 @@ public class Controller implements Initializable {
 
         String text = textCN.getText();
         String colour = color.getValue().toString();
-        List<String> list_of_props = new ArrayList<String>();
+        List<String> list_of_props = new ArrayList<>();
         Collections.addAll(list_of_props,text,colour);
         currentButton.setStyle("-fx-background-color: "+color.getValue().toString().replace("0x", "#")+";");
-        if(!calendarNoteList.containsKey(dateString)){
+        /*if(!calendarNoteList.containsKey(dateString)){
             calendarNoteList.put(dateString, list_of_props);
             DBCalendar.insert(dateString,text,colour );
         }
         else{
             calendarNoteList.put(dateString, list_of_props);
             DBCalendar.update(dateString,text,colour);
+        }*/
+        calendarNoteList = calendarCreateOrUpdate(dateString, text, colour, list_of_props);
+    }
+    public static HashMap<String, List<String>> calendarCreateOrUpdate(String dateString, String text, String colour, List<String> list_of_props){ // for testing
+        if(!calendarNoteList.containsKey(dateString)){
+            calendarNoteList.put(dateString, list_of_props);
+            DBCalendar.insert(dateString,text,colour );
+            return calendarNoteList;
+        }
+        else{
+            calendarNoteList.put(dateString, list_of_props);
+            DBCalendar.update(dateString,text,colour);
+            return calendarNoteList;
         }
     }
     @FXML
@@ -226,7 +276,7 @@ public class Controller implements Initializable {
         String title = titleN.getText();
         currentTitle = title;
         if(title != null && !(title.isEmpty())) {
-            String text = textN.getText();
+            String text = getPage();
             if (!noteList.containsKey(title)) {
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
@@ -245,7 +295,7 @@ public class Controller implements Initializable {
         String title = titleBox.getValue();
         currentTitle = title;
         titleN.setText(title);
-        textN.setText(noteList.get(title));
+        setPage(noteList.get(title));
     }
 
     @FXML
@@ -257,7 +307,7 @@ public class Controller implements Initializable {
         titleBox.setValue(null);
         notesInfo.remove(title);
 
-        textN.clear();
+        clearPage();
         titleN.clear();
     }
 
@@ -265,10 +315,10 @@ public class Controller implements Initializable {
     void changeTitle(ActionEvent event) {
         clearWarnings();
         String title = titleN.getText();
-
         if(title != null && !(title.isEmpty())) {
-            String text = textN.getText();
+            String text = getPage();
             if (!noteList.containsKey(title)) {
+                noteList.remove(currentTitle, text);
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
                 titleBox.getItems().remove(currentTitle);
@@ -284,14 +334,13 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void exportToPDF(ActionEvent event) throws DocumentException, FileNotFoundException {
+    void exportToPDF(ActionEvent event) throws DocumentException, IOException {
         clearWarnings();
         if (tabN.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
-            if ((!titleN.getText().isEmpty()) && (!textN.getText().isEmpty())) {
-                String title = titleN.getText();
-                String text = textN.getText();
+            if (!titleN.getText().isEmpty()) {
+                String text = getPage();
                 PDF pdfN = new PDF();
-                pdfN.exportToPDF(title, text);
+                pdfN.exportHTMLToPDF(text);
             } else {
                 warningN.setText("Title or text is empty");
             }
@@ -301,7 +350,7 @@ public class Controller implements Initializable {
                 String dateString = date.dateFormat(currentButton, monthBox, yearBox);
                 String text = textCN.getText();
                 PDF pdfN = new PDF();
-                pdfN.exportToPDF(dateString, text);
+                pdfN.exportStringToPDF(dateString, text);
             } else {
                 warningCN.setText("Text is empty");
             }
@@ -313,10 +362,67 @@ public class Controller implements Initializable {
         clearWarnings();
         titleBox.setValue(null); // stops showing the current title
         titleN.clear();
-        textN.clear();
+        clearPage();
     }
     public void clearWarnings(){
         warningN.setText("");
         warningCN.setText("");
     }
+    @FXML
+    void loadPage() {
+        File f = new File("src\\main\\resources\\index.html");
+        engine.load(f.toURI().toString());
+    }
+
+    @FXML
+    void setPage(String html){
+        clearPage();
+        engine.executeScript("set('"+html+"')");
+
+    }
+    @FXML
+    String getPage(){
+        String html = (String)engine.executeScript("get()");
+        return html;
+    }
+
+    @FXML
+    void clearPage(){
+        engine.executeScript("$('#SummernoteText').summernote('reset');"); // engine.executeScript("$('#SummernoteText').summernote('code', '');");
+        engine.executeScript("set('<p><br></p>')");
+
+    }
+
+
+    @FXML
+    void searchCal(ActionEvent event) {
+        List<String> selectedItemsCopy = new ArrayList<>(listView.getSelectionModel().getSelectedItems());
+        listView.getItems().removeAll(selectedItemsCopy);
+        listView.getItems().clear();
+        searchResult.clear();
+
+        String searchText = searchBar.getText();
+        for(Map.Entry<String, List<String>> pair: calendarNoteList.entrySet()){
+            if(calendarNoteList.get(pair.getKey()).get(0) != null){
+                if(calendarNoteList.get(pair.getKey()).get(0).contains(searchText)){
+                    listView.getItems().add(pair.getKey());
+                }
+            }
+        }
+        listView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-background-color: "+calendarNoteList.get(item).get(1).replace("0x", "#")+";");
+                }
+            }
+        });
+    }
+
 }

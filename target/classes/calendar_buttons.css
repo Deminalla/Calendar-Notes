@@ -3,11 +3,11 @@
     -fx-background-color: #ffffff;
     -fx-text-fill: black;
 }
-.active{
- -fx-border-color: blue;
-}
 .weekend_red{
     -fx-border-color: red;
     -fx-background-color: #ffffff;
     -fx-text-fill: red;
+}
+.active{
+ -fx-border-color: blue;
 }
