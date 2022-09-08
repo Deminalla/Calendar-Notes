@@ -3,16 +3,14 @@ package com.example.calendarnotes;
 import com.itextpdf.text.*;
 import javafx.beans.value.*;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.*;
-import java.sql.SQLOutput;
 
 import java.net.URL;
 import java.util.*;
@@ -42,8 +40,10 @@ public class Controller implements Initializable {
 
     @FXML
     private TextArea textCN;
+    
     @FXML
     private ColorPicker color;
+    
     @FXML
     private  Label date_text;
 
@@ -71,7 +71,7 @@ public class Controller implements Initializable {
         yearBox.getItems().addAll(yearList);
         titleBox.setOnAction(this::retrieveNote);
 
-        noteList.putAll(notesInfo.selectAll("Notes")); // add data from database
+        noteList.putAll(notesInfo.selectAll()); // add data from database
         Set<String> keys = noteList.keySet();
         titleBox.getItems().addAll(keys); // this will show the titles in the choicebox
 
@@ -157,6 +157,7 @@ public class Controller implements Initializable {
        list.get(26).getStyleClass().add("weekend_red");
        list.get(27).getStyleClass().add("weekend_red");
     }
+    
     @FXML
     void Button(ActionEvent event){
         clearWarnings();
@@ -229,11 +230,11 @@ public class Controller implements Initializable {
             if (!noteList.containsKey(title)) {
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
-                notesInfo.insert(title, text, "Notes");
+                notesInfo.insert(title, text);
                 titleBox.setValue(title);
             } else {
                 noteList.put(title, text);
-                notesInfo.update(title, text, "Notes");
+                notesInfo.update(title, text);
             }
         } else {
             warningN.setText("Title is empty");
@@ -254,7 +255,7 @@ public class Controller implements Initializable {
         noteList.remove(title);
         titleBox.getItems().remove(title);
         titleBox.setValue(null);
-        notesInfo.remove(title, "Notes");
+        notesInfo.remove(title);
 
         textN.clear();
         titleN.clear();
@@ -271,7 +272,7 @@ public class Controller implements Initializable {
                 noteList.put(title, text);
                 titleBox.getItems().addAll(title);
                 titleBox.getItems().remove(currentTitle);
-                notesInfo.updateTitle(currentTitle, title, "Notes");
+                notesInfo.updateTitle(currentTitle, title);
                 titleBox.setValue(title);
             } else {
                 warningN.setText("Title already exists");
