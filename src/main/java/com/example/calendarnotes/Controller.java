@@ -76,9 +76,9 @@ public class Controller implements Initializable {
     Month[] monthList = Month.values();
     List<Integer> yearList = IntStream.range(1970, 2023).boxed().collect(Collectors.toList());
     HashMap<String, String> noteList = new HashMap<>();
-    HashMap<String, List<String>> calendarNoteList = new HashMap<>();
+    static HashMap<String, List<String>> calendarNoteList = new HashMap<>(); // will making this static cause a problem?
     DB notesInfo = new DB();
-    DBCalendar DBCalendar = new DBCalendar();
+    static DBCalendar DBCalendar = new DBCalendar(); // will making this static cause a problem?
 
 
     @Override
@@ -236,13 +236,26 @@ public class Controller implements Initializable {
         List<String> list_of_props = new ArrayList<>();
         Collections.addAll(list_of_props,text,colour);
         currentButton.setStyle("-fx-background-color: "+color.getValue().toString().replace("0x", "#")+";");
-        if(!calendarNoteList.containsKey(dateString)){
+        /*if(!calendarNoteList.containsKey(dateString)){
             calendarNoteList.put(dateString, list_of_props);
             DBCalendar.insert(dateString,text,colour );
         }
         else{
             calendarNoteList.put(dateString, list_of_props);
             DBCalendar.update(dateString,text,colour);
+        }*/
+        calendarNoteList = calendarCreateOrUpdate(dateString, text, colour, list_of_props);
+    }
+    public static HashMap<String, List<String>> calendarCreateOrUpdate(String dateString, String text, String colour, List<String> list_of_props){ // for testing
+        if(!calendarNoteList.containsKey(dateString)){
+            calendarNoteList.put(dateString, list_of_props);
+            DBCalendar.insert(dateString,text,colour );
+            return calendarNoteList;
+        }
+        else{
+            calendarNoteList.put(dateString, list_of_props);
+            DBCalendar.update(dateString,text,colour);
+            return calendarNoteList;
         }
     }
     @FXML
@@ -279,10 +292,10 @@ public class Controller implements Initializable {
     }
 
     public void retrieveNote(ActionEvent event){
-            String title = titleBox.getValue();
-            currentTitle = title;
-            titleN.setText(title);
-            setPage(noteList.get(title));
+        String title = titleBox.getValue();
+        currentTitle = title;
+        titleN.setText(title);
+        setPage(noteList.get(title));
     }
 
     @FXML
@@ -325,7 +338,6 @@ public class Controller implements Initializable {
         clearWarnings();
         if (tabN.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
             if (!titleN.getText().isEmpty()) {
-                //String title = titleN.getText();
                 String text = getPage();
                 PDF pdfN = new PDF();
                 pdfN.exportHTMLToPDF(text);
