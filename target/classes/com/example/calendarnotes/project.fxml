@@ -75,37 +75,23 @@
                     </children></AnchorPane>
             </content>
         </Tab>
-        <Tab fx:id="tabN" text="Notes">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="663.0">
-                    <children>
-                        <Button layoutX="581.0" layoutY="109.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
-                        <Button layoutX="581.0" layoutY="66.0" mnemonicParsing="false" onAction="#clear" text="New" />
-                        <Button layoutX="576.0" layoutY="154.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
-                        <ChoiceBox fx:id="titleBox" layoutX="249.0" layoutY="27.0" prefHeight="26.0" prefWidth="174.0" />
-                        <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
-                        <TextArea fx:id="textN" layoutX="28.0" layoutY="66.0" prefHeight="286.0" prefWidth="516.0" />
-                  <Button layoutX="557.0" layoutY="238.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
-                  <Label fx:id="warningN" layoutX="447.0" layoutY="32.0" prefHeight="18.0" prefWidth="190.0" style="-fx-text-fill: red;" />
-                  <Button layoutX="561.0" layoutY="196.0" mnemonicParsing="false" onAction="#changeTitle" text="Change title" />
-                    </children></AnchorPane>
-            </content>
-        </Tab>
-      <Tab text="new_note">
+      <Tab fx:id="tab_notes" text="new_note">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <AnchorPane layoutX="1.0" layoutY="-1.0" prefHeight="386.0" prefWidth="674.0" visible="false">
+                  <AnchorPane fx:id="notes_tab" layoutX="1.0" layoutY="-1.0" prefHeight="386.0" prefWidth="674.0" visible="false">
                      <children>
-                        <Button layoutX="246.0" layoutY="22.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
-                        <Button layoutX="503.0" layoutY="22.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
-                        <TextField fx:id="titleN1" layoutX="36.0" layoutY="21.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
-                        <TextArea fx:id="textN1" layoutX="23.0" layoutY="63.0" prefHeight="286.0" prefWidth="628.0" />
-                        <Button layoutX="562.0" layoutY="22.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
-                        <Button layoutX="247.0" layoutY="22.0" mnemonicParsing="false" text="edit" visible="false" />
+                        <Button fx:id="add" layoutX="287.0" layoutY="22.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
+                        <Button fx:id="delete" layoutX="503.0" layoutY="22.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
+                        <TextField fx:id="title_field" layoutX="93.0" layoutY="22.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
+                        <TextArea fx:id="text_field" layoutX="23.0" layoutY="63.0" prefHeight="286.0" prefWidth="628.0" />
+                        <Button fx:id="export" layoutX="562.0" layoutY="22.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
+                        <Button layoutX="23.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" text="back" />
+                        <Button fx:id="edit" layoutX="286.0" layoutY="22.0" mnemonicParsing="false" onAction="#save" text="save" visible="false" />
+                        <Label fx:id="warningN" layoutX="459.0" layoutY="354.0" prefHeight="18.0" prefWidth="190.0" style="-fx-text-fill: red;" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutY="2.0" prefHeight="380.0" prefWidth="674.0">
+                  <AnchorPane fx:id="disp_dab" layoutY="2.0" prefHeight="380.0" prefWidth="674.0">
                      <children>
                         <ScrollPane fx:id="notes_area" layoutX="14.0" layoutY="44.0" prefHeight="322.0" prefWidth="647.0" />
                         <Button layoutX="28.0" layoutY="8.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="57.0" text="Add" />

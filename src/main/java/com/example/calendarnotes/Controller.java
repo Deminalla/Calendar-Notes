@@ -6,7 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -22,7 +24,7 @@ import java.util.stream.IntStream;
 public class Controller implements Initializable {
 
     @FXML
-    private Tab tabCN, tabN;
+    private Tab tabCN, tabN, tab_notes;
 
     @FXML
     private ChoiceBox<Integer> yearBox;
@@ -47,6 +49,21 @@ public class Controller implements Initializable {
     private  Label date_text;
     @FXML
     private  ScrollPane notes_area;
+    @FXML
+    private AnchorPane notes_tab;
+    @FXML
+    private  AnchorPane disp_dab;
+    @FXML
+    private  Button add;
+    @FXML
+    private  Button edit;
+    @FXML
+    private  Button delete;
+
+    @FXML
+    private TextField title_field;
+    @FXML
+    private TextArea text_field;
 
 
     @FXML
@@ -73,11 +90,19 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         monthBox.getItems().addAll(monthList);
         yearBox.getItems().addAll(yearList);
-        titleBox.setOnAction(this::retrieveNote);
+//        titleBox.setOnAction(this::retrieveNote);
 
         notes_area.setContent(stickey_notes.notes_init(grid));
+        stickey_notes.setDisp_dab(disp_dab);
+        stickey_notes.setNotes_tab(notes_tab);
+        stickey_notes.setAdd(add);
+        stickey_notes.setEdit(edit);
+        stickey_notes.setDelete(delete);
+        stickey_notes.setText_field(text_field);
+        stickey_notes.setTitle_field(title_field);
 
         grid.setPadding(new Insets(5));
         grid.setHgap(5);
@@ -86,7 +111,7 @@ public class Controller implements Initializable {
 
         noteList.putAll(notesInfo.selectAll("Notes")); // add data from database
         Set<String> keys = noteList.keySet();
-        titleBox.getItems().addAll(keys); // this will show the titles in the choicebox
+//        titleBox.getItems().addAll(keys); // this will show the titles in the choicebox
 
         calendarNoteList.putAll(DBCalendar.selectAll());
 
@@ -126,9 +151,17 @@ public class Controller implements Initializable {
             }
         });
     }
+
     @FXML
     private void add() {
-        notes_area.setContent(stickey_notes.add(grid));
+        disp_dab.setVisible(false);
+        notes_tab.setVisible(true);
+        add.setVisible(true);
+        edit.setVisible(false);
+        delete.setVisible(false);
+        title_field.clear();
+        text_field.clear();
+//        notes_area.setContent(stickey_notes.add(grid));
     }
 
 
@@ -165,14 +198,10 @@ public class Controller implements Initializable {
 
     }
     private void set_weekend_days_red(List<Button> list) {
-       list.get(5).getStyleClass().add("weekend_red");
-       list.get(6).getStyleClass().add("weekend_red");
-       list.get(12).getStyleClass().add("weekend_red");
-       list.get(13).getStyleClass().add("weekend_red");
-       list.get(19).getStyleClass().add("weekend_red");
-       list.get(20).getStyleClass().add("weekend_red");
-       list.get(26).getStyleClass().add("weekend_red");
-       list.get(27).getStyleClass().add("weekend_red");
+        for (int i = 5; i <list.size() ; i+= 7) {
+            list.get(i).getStyleClass().add("weekend_red");
+            list.get(i+1).getStyleClass().add("weekend_red");
+        }
     }
     @FXML
     void Button(ActionEvent event){
@@ -188,6 +217,12 @@ public class Controller implements Initializable {
         currentButton = b;
         retrieveCalendarNote();
         }
+
+    @FXML
+    void back(ActionEvent event){
+        disp_dab.setVisible(true);
+        notes_tab.setVisible(false);
+    }
 
     private void retrieveCalendarNote() {
         DateInfo dateContr = new DateInfo();
@@ -238,19 +273,46 @@ public class Controller implements Initializable {
 
     @FXML
     void createNote(ActionEvent event) {
+        disp_dab.setVisible(true);
+        notes_tab.setVisible(false);
         clearWarnings();
-        String title = titleN.getText();
+        String title = title_field.getText();
         currentTitle = title;
         if(title != null && !(title.isEmpty())) {
-            String text = textN.getText();
-            if (!noteList.containsKey(title)) {
-                noteList.put(title, text);
-                titleBox.getItems().addAll(title);
+            String text = text_field.getText();
+            if (!stickey_notes.noteList.containsKey(title)) {
                 notesInfo.insert(title, text, "Notes");
                 titleBox.setValue(title);
+                stickey_notes.noteList.put(title, text);
+                stickey_notes.add(grid,title);
             } else {
-                noteList.put(title, text);
+//                noteList.put(title, text);
+//                notesInfo.update(title, text, "Notes");
+                warningN.setText("note with this title already exists");
+            }
+        } else {
+            warningN.setText("Title is empty");
+        }
+    }
+    @FXML
+    void save(ActionEvent event) {
+        disp_dab.setVisible(true);
+        notes_tab.setVisible(false);
+        clearWarnings();
+        String title = title_field.getText();
+        currentTitle = stickey_notes.getCurrentTitle();
+        if(title != null && !(title.isEmpty())) {
+            String text = text_field.getText();
+            if (!stickey_notes.noteList.containsKey(title)) {
                 notesInfo.update(title, text, "Notes");
+                notesInfo.updateTitle(currentTitle,title,"Notes");
+                stickey_notes.noteList.put(title, text);
+                stickey_notes.update(title);
+//                stickey_notes.add(grid,title);
+            } else {
+//                noteList.put(title, text);
+//                notesInfo.update(title, text, "Notes");
+                warningN.setText("note with this title already exists");
             }
         } else {
             warningN.setText("Title is empty");
@@ -267,45 +329,42 @@ public class Controller implements Initializable {
     @FXML
     void deleteNote(ActionEvent event){
         clearWarnings();
-        String title = titleN.getText();
-        noteList.remove(title);
-        titleBox.getItems().remove(title);
-        titleBox.setValue(null);
+        disp_dab.setVisible(true);
+        notes_tab.setVisible(false);
+        String title = title_field.getText();
         notesInfo.remove(title, "Notes");
-
-        textN.clear();
-        titleN.clear();
+        stickey_notes.notes_init(grid);
     }
 
-    @FXML
-    void changeTitle(ActionEvent event) {
-        clearWarnings();
-        String title = titleN.getText();
-
-        if(title != null && !(title.isEmpty())) {
-            String text = textN.getText();
-            if (!noteList.containsKey(title)) {
-                noteList.put(title, text);
-                titleBox.getItems().addAll(title);
-                titleBox.getItems().remove(currentTitle);
-                notesInfo.updateTitle(currentTitle, title, "Notes");
-                titleBox.setValue(title);
-            } else {
-                warningN.setText("Title already exists");
-            }
-        } else {
-            warningN.setText("Title is empty");
-        }
-        currentTitle = title;
-    }
+//    @FXML
+//    void changeTitle(ActionEvent event) {
+//        clearWarnings();
+//        String title = titleN.getText();
+//
+//        if(title != null && !(title.isEmpty())) {
+//            String text = textN.getText();
+//            if (!noteList.containsKey(title)) {
+//                noteList.put(title, text);
+//                titleBox.getItems().addAll(title);
+//                titleBox.getItems().remove(currentTitle);
+//                notesInfo.updateTitle(currentTitle, title, "Notes");
+//                titleBox.setValue(title);
+//            } else {
+//                warningN.setText("Title already exists");
+//            }
+//        } else {
+//            warningN.setText("Title is empty");
+//        }
+//        currentTitle = title;
+//    }
 
     @FXML
     void exportToPDF(ActionEvent event) throws DocumentException, FileNotFoundException {
         clearWarnings();
-        if (tabN.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
-            if ((!titleN.getText().isEmpty()) && (!textN.getText().isEmpty())) {
-                String title = titleN.getText();
-                String text = textN.getText();
+        if (tab_notes.isSelected()) { // to know from which tab we are exporting (because then the keys are different)
+            if ((!title_field.getText().isEmpty()) && (!text_field.getText().isEmpty())) {
+                String title = title_field.getText();
+                String text = text_field.getText();
                 PDF pdfN = new PDF();
                 pdfN.exportToPDF(title, text);
             } else {
@@ -324,13 +383,13 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML
-    void clear(ActionEvent event) {
-        clearWarnings();
-        titleBox.setValue(null); // stops showing the current title
-        titleN.clear();
-        textN.clear();
-    }
+//    @FXML
+//    void clear(ActionEvent event) {
+//        clearWarnings();
+//        titleBox.setValue(null); // stops showing the current title
+//        titleN.clear();
+//        textN.clear();
+//    }
     public void clearWarnings(){
         warningN.setText("");
         warningCN.setText("");
