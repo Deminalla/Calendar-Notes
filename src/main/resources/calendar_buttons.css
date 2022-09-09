@@ -1,11 +1,11 @@
 .buttonn{
     -fx-border-color: black;
-    -fx-background-color: #ffffff;
+    -fx-background-color: black;
     -fx-text-fill: black;
 }
 .weekend_red{
     -fx-border-color: red;
-    -fx-background-color: #ffffff;
+    -fx-background-color: black;
     -fx-text-fill: red;
 }
 .active{
