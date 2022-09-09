@@ -16,7 +16,8 @@ class allTests {
 
     @Test
     void selectAll() { // maybe i shouldnt even check this
-        assertEquals(9, cal.selectAll().size());
+        //assertEquals(9, cal.selectAll().size());
+        // make sure for now theres 9
     }
     @Test
     void insert() {
@@ -24,12 +25,14 @@ class allTests {
         calendarNoteList = cal.selectAll();
         cal.insert("06-09-2022", "hi, don't mind me", "0x99cc99ff");
         assertEquals(size+1, cal.selectAll().size());
+        assertFalse(calendarNoteList.containsKey("06-09-2022")); // it won't exist in the hashmap before putting it there
 
         List<String> list_of_props = new ArrayList<>();
         Collections.addAll(list_of_props,"hi, don't mind me", "0x99cc99ff");
         calendarNoteList.put("06-09-2022", list_of_props);
         assertEquals(calendarNoteList, cal.selectAll()); // the correct information has been inserted to DB
     }
+
     @Test
     void remove() {
         int size  = cal.selectAll().size();
@@ -57,5 +60,15 @@ class allTests {
         calendarNoteList = cal.selectAll();
         assertFalse(calendarNoteList.containsKey(dateString));
         assertEquals(size-1, cal.selectAll().size());
+    }
+
+    @Test
+    //@ValueSource(ints = {15, 3, 5, -3, 21})
+    void firstWeekD(){
+        Calendar cal = new GregorianCalendar();
+        cal.set(2022, 8, 1);
+        assertEquals(4, Controller.firstWeekD(cal));
+        cal.set(2021, 1, 1);
+        assertEquals(1, Controller.firstWeekD(cal));
     }
 }

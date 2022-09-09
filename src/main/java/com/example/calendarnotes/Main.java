@@ -17,7 +17,7 @@ public class Main extends Application {
         scene.getStylesheets().add("searchList.css");
         scene.getStylesheets().add("tab_pane.css");
         stage.setTitle("NoteMe");
-        stage.getIcons().add(new Image(Main.class.getResource("/icon3.png").toString()));
+        stage.getIcons().add(new Image(Main.class.getResource("/icon.png").toString()));
         stage.setScene(scene);
         stage.show();
         stage.setMinWidth(stage.getWidth());

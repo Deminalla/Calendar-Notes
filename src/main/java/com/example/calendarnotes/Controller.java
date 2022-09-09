@@ -194,14 +194,17 @@ public class Controller implements Initializable {
         Calendar cal = new GregorianCalendar();
         cal.clear();
         cal.set(year, month-1, 1);
-        int firstWeekdayOfMonth = cal.get(Calendar.DAY_OF_WEEK)-1;
         int numberOfMonthDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        firstWeekdayOfMonth = ((firstWeekdayOfMonth == 0) ? 7 : firstWeekdayOfMonth);
+        int firstWeekdayOfMonth = firstWeekD(cal);
         printCalendar(numberOfMonthDays, firstWeekdayOfMonth, butonlist);
     }
-     /*public  Integer (){
+
+    public static int firstWeekD (Calendar cal){
+        int firstWeekdayOfMonth = cal.get(Calendar.DAY_OF_WEEK)-1;
+        firstWeekdayOfMonth = ((firstWeekdayOfMonth == 0) ? 7 : firstWeekdayOfMonth);
         return firstWeekdayOfMonth;
-    }*/
+    }
+
     private void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
         int day_of_month = 1;
         DateInfo dateContr = new DateInfo();
