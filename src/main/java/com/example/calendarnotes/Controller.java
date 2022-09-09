@@ -187,7 +187,7 @@ public class Controller implements Initializable {
 
 
 
-    private void printCalendarMonthYear(int month, int year,List<Button> butonlist) {
+    private void printCalendarMonthYear(int month, int year, List<Button> butonlist) {
         for (Button button:butonlist) {
             button.setText("");
         }
@@ -199,6 +199,9 @@ public class Controller implements Initializable {
         firstWeekdayOfMonth = ((firstWeekdayOfMonth == 0) ? 7 : firstWeekdayOfMonth);
         printCalendar(numberOfMonthDays, firstWeekdayOfMonth, butonlist);
     }
+     /*public  Integer (){
+        return firstWeekdayOfMonth;
+    }*/
     private void printCalendar(int numberOfMonthDays, int firstWeekdayOfMonth,List<Button> butonlist) {
         int day_of_month = 1;
         DateInfo dateContr = new DateInfo();
@@ -281,6 +284,7 @@ public class Controller implements Initializable {
             return calendarNoteList;
         }
     }
+
     @FXML
     void deleteCalendarNote(ActionEvent event) {
         clearWarnings();
