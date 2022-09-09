@@ -15,12 +15,14 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add("calendar_buttons.css");
         scene.getStylesheets().add("searchList.css");
+        scene.getStylesheets().add("tab_pane.css");
         stage.setTitle("NoteMe");
-        stage.getIcons().add(new Image(Main.class.getResource("/icon.png").toString()));
+        stage.getIcons().add(new Image(Main.class.getResource("/icon3.png").toString()));
         stage.setScene(scene);
         stage.show();
+        stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
     }
-
     public static void main(String[] args) {
         launch();
     }

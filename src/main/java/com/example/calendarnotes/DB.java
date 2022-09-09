@@ -37,6 +37,20 @@ public class DB {
             System.out.println(e.getMessage());
         }
     }
+    public int getProfilesCount() {
+        String sql = "SELECT  * FROM  notes";
+        int count =0;
+        try (Connection conn = this.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)){
+            while (rs.next()) { // loop through the result set
+                count++;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
 
     public void updateTitle(String oldTitle, String newTitle){
         String sql = "UPDATE Notes SET Title = ? WHERE Title = ?";
