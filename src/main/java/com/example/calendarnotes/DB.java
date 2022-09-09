@@ -1,6 +1,4 @@
 package com.example.calendarnotes;
-import javafx.scene.Cursor;
-
 import java.sql.*;
 import java.util.HashMap;
 
@@ -16,8 +14,8 @@ public class DB {
         return conn;
     }
 
-    public void insert(String title, String text, String tableName) {
-        String sql = "INSERT INTO " + tableName + " (Title,TextField) VALUES(?,?)"; // ? are values that we will initialize later
+    public void insert(String title, String text) {
+        String sql = "INSERT INTO Notes (Title,TextField) VALUES(?,?)"; // ? are values that we will initialize later
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, title);
@@ -28,8 +26,8 @@ public class DB {
         }
     }
 
-    public void update(String title, String text, String tableName){
-        String sql = "UPDATE " + tableName + " SET Textfield = ? WHERE Title = ?";
+    public void update(String title, String text){
+        String sql = "UPDATE Notes SET Textfield = ? WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, text);
@@ -39,7 +37,6 @@ public class DB {
             System.out.println(e.getMessage());
         }
     }
-
     public int getProfilesCount() {
         String sql = "SELECT  * FROM  notes";
         int count =0;
@@ -54,10 +51,10 @@ public class DB {
         }
         return count;
     }
-    public void updateTitle(String oldTitle, String newTitle, String tableName){
-        String sql = "UPDATE " + tableName + " SET Title = ? WHERE Title = ?";
-        try (Connection conn = this.connect();
 
+    public void updateTitle(String oldTitle, String newTitle){
+        String sql = "UPDATE Notes SET Title = ? WHERE Title = ?";
+        try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, newTitle);
             pstmt.setString(2, oldTitle);
@@ -67,8 +64,8 @@ public class DB {
         }
     }
 
-    public void remove(String title, String tableName){
-        String sql = "DELETE FROM " + tableName + " WHERE Title = ?";
+    public void remove(String title){
+        String sql = "DELETE FROM Notes WHERE Title = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, title);
@@ -78,8 +75,8 @@ public class DB {
         }
     }
 
-    public HashMap<String, String> selectAll(String tableName){
-        String sql = "SELECT Title, TextField FROM " + tableName;
+    public HashMap<String, String> selectAll(){
+        String sql = "SELECT Title, TextField FROM Notes";
         HashMap<String, String> noteList = new HashMap<>();
 
         try (Connection conn = this.connect();
@@ -101,7 +98,6 @@ public class DB {
         // could be used for testing
 
         /*DB app = new DB();
-        // insert three new rows
         app.insert("Yes", "lmao actually no i lied");
         app.insert("Semifinished Goods", "what is this");
         app.insert("Finished Goods", "nooooo");

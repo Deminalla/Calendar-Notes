@@ -4,10 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebEngine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +32,10 @@ public class Stickey_Notes {
     @FXML
     private TextField title_field;
     @FXML
-    private TextArea text_field;
+    private Label warningN;
     private int row,column = 0;
     int curent_notes_count;
-
+    private WebEngine engine;
 
     private List<Button> list = new ArrayList<>();
     private String currentTitle = "";
@@ -41,12 +43,15 @@ public class Stickey_Notes {
     Button currentButton = new Button();
     DB db = new DB();
     public HashMap<String, String> noteList = new HashMap<>();
+
+    double row_notes_count=5;
     public GridPane notes_init(GridPane grid) {
         row = 0;
         column = 0;
+        list.clear();
         grid.getChildren().clear();
         curent_notes_count=0;
-        noteList = db.selectAll("Notes");
+        noteList = db.selectAll();
         List<String> titles = new ArrayList<String>(noteList.keySet());
         while (curent_notes_count<db.getProfilesCount()){
             Button button = new Button(titles.get(curent_notes_count));
@@ -58,7 +63,7 @@ public class Stickey_Notes {
             list.add(button);
             grid.add(button, column, row);
             column++;
-            if(column>5){
+            if(column>row_notes_count){
                 column = 0;
                 row++;
             }
@@ -81,9 +86,9 @@ public class Stickey_Notes {
             currentTitle = b.getText();
             currentButton = b;
 
-
+            warningN.setText("");
             title_field.setText(title);
-            text_field.setText(noteList.get(title));
+            setPage(noteList.get(title));
         }
     };
 
@@ -97,19 +102,31 @@ public class Stickey_Notes {
         list.add(button);
         grid.add(button, column, row);
         column++;
-        if(column>5){
+        if(column>row_notes_count){
             column = 0;
             row++;
         }
         return grid;
     }
+    public void resize(GridPane grid,double screen_width) {
+        row = 0;
+        column = 0;
+        grid.getChildren().clear();
+        row_notes_count = (screen_width/105)-1;
+        for (Button button:list) {
+            grid.add(button, column, row);
+            column++;
+            if(column>row_notes_count){
+                column = 0;
+                row++;
+            }
+        }
+    }
     public void update(String title) {
         currentButton.setText(title);
         currentButton.setOnAction(buttonHandler);
     }
-    public void delete(String title) {
 
-    }
     public void setNotes_tab(AnchorPane notes_tab) {
         this.notes_tab = notes_tab;
     }
@@ -130,14 +147,25 @@ public class Stickey_Notes {
         this.delete = delete;
     }
 
+    public void setEngine(WebEngine engine) {
+        this.engine = engine;
+    }
+
     public void setTitle_field(TextField title_field) {
         this.title_field = title_field;
     }
 
-    public void setText_field(TextArea text_field) {
-        this.text_field = text_field;
+    public void setWarningN(Label warningN) {
+        this.warningN = warningN;
     }
     public String getCurrentTitle() {
         return currentTitle;
+    }
+    @FXML
+    void setPage(String html){
+        engine.executeScript("$('#SummernoteText').summernote('reset');"); // engine.executeScript("$('#SummernoteText').summernote('code', '');");
+        engine.executeScript("set('<p><br></p>')");
+        engine.executeScript("set('"+html+"')");
+
     }
 }
