@@ -121,7 +121,7 @@ public class Controller implements Initializable {
         grid.setHgap(5);
         grid.setVgap(5);
 
-//        disp_dab.getStyleClass().add("anchor-pane");
+//        grid.getStyleClass().add("anchor-pane");
 
         //web stuff
         engine = webView.getEngine();
@@ -203,7 +203,7 @@ public class Controller implements Initializable {
         int day_of_month = 1;
         DateInfo dateContr = new DateInfo();
         for (int j =0; j<37;j++){
-            butonlist.get(j).setStyle("-fx-background-color: #ffffff");
+            butonlist.get(j).setStyle("-fx-background-color: #cdcdcd");
             if(j>=firstWeekdayOfMonth-1&&j<numberOfMonthDays+firstWeekdayOfMonth-1){
                 butonlist.get(j).setVisible(true);
                 butonlist.get(j).setText(day_of_month+"");
@@ -286,7 +286,7 @@ public class Controller implements Initializable {
         clearWarnings();
         DateInfo dateContr = new DateInfo();
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
-        currentButton.setStyle("-fx-background-color: #ffffff");
+        currentButton.setStyle("-fx-background-color: #cdcdcd");
         color.setValue(Color.valueOf("#ffffff"));
         calendarNoteList.remove(dateString);
         DBCalendar.remove(dateString);

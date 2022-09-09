@@ -8,17 +8,50 @@
   <script src="bootstrap.min.js"></script>
   <link href="summernote-0.8.20\dist\summernote.min.css" rel="stylesheet">
   <script src="summernote-0.8.20\dist\summernote.min.js"></script>
+  
+  
  
 </head>
 <body>
   <div id="summernote"><p></p></div>
   <script>
-    $(document).ready(function() {       
-		$("#summernote").summernote(
-			"fullscreen.toggle"
-		);
+    $(document).ready(function() {
+      $("#summernote").summernote("fullscreen.toggle");
+        $('#summernote').summernote({
+			height: 180,
+			keyMap: {
+            pc: {
+    'ENTER': 'insertParagraph',
+    'CTRL+Z': 'undo',
+    'CTRL+Y': 'redo',
+    'TAB': 'tab',
+    'SHIFT+TAB': 'untab',
+    'CTRL+B': 'bold',
+    'CTRL+I': 'italic',
+    'CTRL+U': 'underline',
+    'CTRL+SHIFT+S': 'strikethrough',
+    'CTRL+BACKSLASH': 'removeFormat',
+    'CTRL+SHIFT+L': 'justifyLeft',
+    'CTRL+SHIFT+E': 'justifyCenter',
+    'CTRL+SHIFT+R': 'justifyRight',
+    'CTRL+SHIFT+J': 'justifyFull',
+    'CTRL+SHIFT+NUM7': 'insertUnorderedList',
+    'CTRL+SHIFT+NUM8': 'insertOrderedList',
+    'CTRL+LEFTBRACKET': 'outdent',
+    'CTRL+RIGHTBRACKET': 'indent',
+    'CTRL+NUM0': 'formatPara',
+    'CTRL+NUM1': 'formatH1',
+    'CTRL+NUM2': 'formatH2',
+    'CTRL+NUM3': 'formatH3',
+    'CTRL+NUM4': 'formatH4',
+    'CTRL+NUM5': 'formatH5',
+    'CTRL+NUM6': 'formatH6',
+    'CTRL+ENTER': 'insertHorizontalRule',
+    
+  }
+  }
+		});
     });
-	
   </script>
 <script id="myscript">
 	function get(){
