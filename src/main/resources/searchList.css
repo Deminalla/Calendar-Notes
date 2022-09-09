@@ -1,0 +1,4 @@
+.list-cell:filled:selected {
+    -fx-text-fill: black;
+    -fx-border-color: blue;
+}

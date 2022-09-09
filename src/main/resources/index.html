@@ -13,11 +13,12 @@
 <body>
   <div id="summernote"><p></p></div>
   <script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-			height: 180
-		});
+    $(document).ready(function() {       
+		$("#summernote").summernote(
+			"fullscreen.toggle"
+		);
     });
+	
   </script>
 <script id="myscript">
 	function get(){

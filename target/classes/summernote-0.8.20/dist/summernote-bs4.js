@@ -801,7 +801,7 @@ function prev(array, item) {
   compact: compact,
   unique: unique
 });
-;// CONCATENATED MODULE: ./src/js/core/dom.js
+// CONCATENATED MODULE: ./src/js/core/dom.js
 
 
 

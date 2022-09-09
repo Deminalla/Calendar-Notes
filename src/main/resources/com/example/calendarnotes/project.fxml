@@ -4,22 +4,26 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.web.WebView?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="674.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendarnotes.Controller">
+<TabPane fx:id="tabs" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="674.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendarnotes.Controller">
     <tabs>
         <Tab fx:id="tabCN" text="Calendar">
             <content>
-                <AnchorPane minHeight="0.00" minWidth="0.0" prefHeight="371.0" prefWidth="660.0">
+                <AnchorPane minHeight="0.00" minWidth="0.0" prefHeight="529.0" prefWidth="674.0">
                     <children>
                         <Label layoutX="107.0" layoutY="31.0" text="Year" />
                         <Label layoutX="257.0" layoutY="30.0" text="Month" />
-                        <TextArea fx:id="textCN" layoutX="353.0" layoutY="88.0" prefHeight="252.0" prefWidth="286.0" />
+                        <TextArea fx:id="textCN" layoutX="353.0" layoutY="88.0" prefHeight="252.0" prefWidth="286.0" AnchorPane.bottomAnchor="43.19999999999999" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="88.0" />
                         <Button fx:id="b1" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b3" layoutX="107.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
                         <Button fx:id="b4" layoutX="150.0" layoutY="88.0" mnemonicParsing="false" onAction="#Button" prefHeight="43.0" prefWidth="43.0" />
@@ -71,24 +75,54 @@
                   <Label layoutX="209.0" layoutY="69.0" text="Fr" />
                   <Label layoutX="251.0" layoutY="69.0" text="Sa" textFill="RED" />
                   <Label layoutX="294.0" layoutY="69.0" text="Su" textFill="RED" />
-                  <Label fx:id="date_text" layoutX="542.0" layoutY="346.0" opacity="0.5" prefHeight="17.0" prefWidth="88.0" />
+                  <Label fx:id="date_text" layoutX="542.0" layoutY="346.0" opacity="0.5" prefHeight="17.0" prefWidth="88.0" AnchorPane.bottomAnchor="19.599999999999987" AnchorPane.rightAnchor="44.39999999999998" />
                     </children></AnchorPane>
             </content>
         </Tab>
-        <Tab fx:id="tabN" text="Notes">
+      <Tab text="Search">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="listView" editable="true" layoutX="30.0" layoutY="84.0" prefHeight="239.0" prefWidth="191.0" />
+                  <TextArea fx:id="searchResult" layoutX="303.0" layoutY="84.0" prefHeight="239.0" prefWidth="330.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="84.0" />
+                  <TextField fx:id="searchBar" layoutX="30.0" layoutY="36.0" prefHeight="26.0" prefWidth="191.0" promptText="the text you're searching" />
+                  <Button layoutX="240.0" layoutY="36.0" mnemonicParsing="false" onAction="#searchCal" text="Search" />
+                  <Label layoutX="38.0" layoutY="331.0" text="DD-MM-YYYY" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+        <Tab fx:id="tab_notes" text="Notes">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="663.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <Button layoutX="581.0" layoutY="109.0" mnemonicParsing="false" onAction="#createNote" text="Add" />
-                        <Button layoutX="581.0" layoutY="66.0" mnemonicParsing="false" onAction="#clear" text="New" />
-                        <Button layoutX="576.0" layoutY="154.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" />
-                        <ChoiceBox fx:id="titleBox" layoutX="249.0" layoutY="27.0" prefHeight="26.0" prefWidth="174.0" />
-                        <TextField fx:id="titleN" layoutX="28.0" layoutY="27.0" prefHeight="26.0" prefWidth="185.0" promptText="title" />
-                        <WebView fx:id="webView" layoutX="28.0" layoutY="64.0" prefHeight="289.0" prefWidth="516.0"/>
-                  <Button layoutX="557.0" layoutY="238.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
-                  <Label fx:id="warningN" layoutX="447.0" layoutY="32.0" prefHeight="18.0" prefWidth="190.0" style="-fx-text-fill: red;" />
-                  <Button layoutX="561.0" layoutY="196.0" mnemonicParsing="false" onAction="#changeTitle" text="Change title" />
-                    </children></AnchorPane>
+                        <AnchorPane fx:id="notes_tab" layoutX="1.0" layoutY="-1.0" prefHeight="386.0" prefWidth="674.0" visible="false" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+                            <children>
+                                <Button fx:id="add" layoutX="287.0" layoutY="22.0" mnemonicParsing="false" onAction="#createNote" text="Add" AnchorPane.leftAnchor="286.0" AnchorPane.topAnchor="22.0" />
+                                <Button fx:id="delete" layoutX="503.0" layoutY="22.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="22.0" />
+                                <TextField fx:id="title_field" layoutX="93.0" layoutY="22.0" prefHeight="26.0" prefWidth="185.0" promptText="title" AnchorPane.leftAnchor="93.0" AnchorPane.topAnchor="22.0" />
+                                <Button fx:id="export" layoutX="562.0" layoutY="22.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="22.0" />
+                                <Button layoutX="23.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" text="back" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="23.0" />
+                                <Button fx:id="edit" layoutX="286.0" layoutY="22.0" mnemonicParsing="false" onAction="#save" text="save" visible="false" AnchorPane.leftAnchor="286.0" AnchorPane.topAnchor="22.0" />
+                                <Label fx:id="warningN" layoutX="401.0" layoutY="354.0" prefHeight="18.0" prefWidth="190.0" style="-fx-text-fill: red;" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="83.0" />
+                        <WebView fx:id="webView" layoutX="23.0" layoutY="57.0" prefHeight="297.0" prefWidth="629.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="57.0" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="disp_dab" layoutY="2.0" prefHeight="380.0" prefWidth="674.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                            <children>
+                                <ScrollPane fx:id="notes_area" layoutX="14.0" layoutY="44.0" prefHeight="322.0" prefWidth="647.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="44.0">
+                           <content>
+                              <GridPane fx:id="grid">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                              </GridPane>
+                           </content></ScrollPane>
+                                <Button layoutX="28.0" layoutY="8.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="57.0" text="Add" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="8.0" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
             </content>
         </Tab>
     </tabs>
