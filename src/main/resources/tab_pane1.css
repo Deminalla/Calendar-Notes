@@ -50,3 +50,9 @@
 -fx-background-color: #49d9ad;
  -fx-text-fill: #777777;
 }
+.choice-box {
+  -fx-background-color: #282b30;
+}
+.color-picker {
+   -fx-background-color: #49d9ad;
+}
