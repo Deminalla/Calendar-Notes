@@ -36,10 +36,10 @@ public class PDF {
             doc.newPage();
 
             if (doc != null) {
-                doc.close(); //close the document
+                doc.close();
             }
             if (docWriter != null) {
-                docWriter.close(); //close the writer
+                docWriter.close();
             }
         }
     }
@@ -51,25 +51,6 @@ public class PDF {
             HtmlConverter.convertToPdf(content, fileOutputStream);
         }
     }
-
-    /*
-    void exportToPDF(String title, String text) {
-        try{
-            String fileLocation = "src\\main\\pdfs\\" + title + ".pdf"; // problem when the title ends with lets say a ?, it wont accept yes?.pdf
-            OutputStream file = new FileOutputStream(new File(fileLocation)); // problem when the title ends with lets say a ?, it wont accept yes?.pdf
-
-            Document document = new Document();
-            PdfWriter.getInstance(document, file);
-            document.open();
-            HTMLWorker htmlWorker = new HTMLWorker(document);
-            htmlWorker.parse(new StringReader(text));
-            document.close();
-            file.close();}
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-     */
 
     public static void main (String []args) {
     }

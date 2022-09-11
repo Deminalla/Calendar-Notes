@@ -63,7 +63,6 @@ class allTests {
     }
 
     @Test
-    //@ValueSource(ints = {15, 3, 5, -3, 21})
     void firstWeekD(){
         Calendar cal = new GregorianCalendar();
         cal.set(2022, 8, 1);

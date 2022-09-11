@@ -176,15 +176,18 @@ public class Controller implements Initializable {
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                //String selectedDate = listView.getSelectionModel().getSelectedItem();
-                if (t1!=null) { // this method gets called when trying to unselect item, so it can be null in that case
-                    String textResult = calendarNoteList.get(t1).get(0);
-                    searchResult.setText(textResult);
+                String selectedDate = listView.getSelectionModel().getSelectedItem();
+                if (selectedDate!=null) { // this method gets called when trying to unselect item, so it can be null in that case
+                    try {
+                        String textResult = calendarNoteList.get(selectedDate).get(0);
+                        searchResult.setText(textResult);
+                    } catch (Exception e) {
+                        searchResult.setText("");
+                    }
                 }
             }
         });
     }
-
 
 
     private void printCalendarMonthYear(int month, int year, List<Button> butonlist) {
@@ -294,7 +297,7 @@ public class Controller implements Initializable {
         DateInfo dateContr = new DateInfo();
         String dateString = dateContr.dateFormat(currentButton, monthBox, yearBox);
         currentButton.setStyle("-fx-background-color: #cdcdcd");
-        color.setValue(Color.valueOf("#ffffff"));
+        color.setValue(Color.valueOf("#cdcdcd"));
         calendarNoteList.remove(dateString);
         DBCalendar.remove(dateString);
         textCN.clear();
@@ -418,15 +421,15 @@ public class Controller implements Initializable {
     }
     @FXML
     void searchCal(ActionEvent event) {
-        List<String> selectedItemsCopy = new ArrayList<>(listView.getSelectionModel().getSelectedItems());
-        listView.getItems().removeAll(selectedItemsCopy);
         listView.getItems().clear();
         searchResult.clear();
+        List<String> selectedItemsCopy = new ArrayList<>(listView.getSelectionModel().getSelectedItems());
+        listView.getItems().removeAll(selectedItemsCopy);
 
         String searchText = searchBar.getText();
         for(Map.Entry<String, List<String>> pair: calendarNoteList.entrySet()){
             if(calendarNoteList.get(pair.getKey()).get(0) != null){
-                if(calendarNoteList.get(pair.getKey()).get(0).contains(searchText)){
+                if(calendarNoteList.get(pair.getKey()).get(0).toLowerCase().contains(searchText.toLowerCase())){ //not case sensitive
                     listView.getItems().add(pair.getKey());
                 }
             }
