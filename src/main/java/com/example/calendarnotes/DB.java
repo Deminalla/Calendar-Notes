@@ -83,7 +83,7 @@ public class DB {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)){
 
-            while (rs.next()) { // loop through the result set
+            while (rs.next()) {
                 String title = rs.getString("Title");
                 String text = rs.getString("TextField");
                 noteList.put(title, text);
@@ -96,12 +96,11 @@ public class DB {
 
     public static void main(String[] args) {
         // could be used for testing
-
         /*DB app = new DB();
-        app.insert("Yes", "lmao actually no i lied");
-        app.insert("Semifinished Goods", "what is this");
-        app.insert("Finished Goods", "nooooo");
-        app.select("Semifinished Goods");
+        app.insert("Yes", "actually no i lied");
+        app.insert("Goods", "what is this");
+        app.insert("hm", "nooooo");
+        app.select("Yes");
         */
     }
 }

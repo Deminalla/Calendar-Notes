@@ -15,9 +15,8 @@ class allTests {
     DBCalendar cal = new DBCalendar();
 
     @Test
-    void selectAll() { // maybe i shouldnt even check this
-        //assertEquals(9, cal.selectAll().size());
-        // make sure for now theres 9
+    void selectAll() {
+        assertEquals(11, cal.selectAll().size()); // for now its 11
     }
     @Test
     void insert() {
@@ -43,7 +42,7 @@ class allTests {
     }
 
     @ParameterizedTest // execute this test method multiple times with different parameters
-    @CsvSource(value = {"19-09-2022, hi, 0xffcc99ff", // this way we can use multiple parameters
+    @CsvSource(value = {"19-09-2022, hi, 0xffcc99ff", // this way we can use multiple parameters (unlike valuesource)
             "15-07-1985, whats up, 0xe49ae4ff"})
     void calendarCreateOrUpdate(String dateString, String text, String colour) {
         List<String> list_of_props = new ArrayList<>();

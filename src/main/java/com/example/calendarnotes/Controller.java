@@ -405,7 +405,7 @@ public class Controller implements Initializable {
 
     @FXML
     void setPage(String html){
-        engine.executeScript("$('#SummernoteText').summernote('reset');"); // engine.executeScript("$('#SummernoteText').summernote('code', '');");
+        engine.executeScript("$('#SummernoteText').summernote('reset');");
     }
     @FXML
     String getPage(){

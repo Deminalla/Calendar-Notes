@@ -3,8 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/calendarnotes/DB.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/calendarnotes/DBCalendar.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/summernote-0.8.20/dist/summernote-bs4.js" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/summernote-0.8.20/dist/summernote-bs5.js" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/summernote-0.8.20/dist/summernote.js" dialect="GenericSQL" />
   </component>
 </project>
