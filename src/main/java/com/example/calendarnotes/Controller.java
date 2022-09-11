@@ -109,7 +109,7 @@ public class Controller implements Initializable {
         stickey_notes.setWarningN(warningN);
         stickey_notes.setTitle_field(title_field);
 
-        notes_area.widthProperty().addListener(new ChangeListener<Number>() {
+        notes_area.widthProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
@@ -253,7 +253,7 @@ public class Controller implements Initializable {
         try {
             color.setValue(Color.valueOf(calendarNoteList.get(dateString).get(1)));
         } catch (Exception e) {
-            color.setValue(Color.valueOf("#ffffff"));
+            color.setValue(Color.valueOf("#cdcdcd"));
         }
         try {
             textCN.setText(calendarNoteList.get(dateString).get(0));
@@ -329,7 +329,7 @@ public class Controller implements Initializable {
                 stickey_notes.noteList.put(title, text);
                 stickey_notes.add(grid,title);
             } else {
-                warningN.setText("note with this title already exists");
+                warningN.setText("Title already exists");
             }
         } else {
             warningN.setText("Title is empty");

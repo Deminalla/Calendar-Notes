@@ -43,8 +43,8 @@ class allTests {
     }
 
     @ParameterizedTest // execute this test method multiple times with different parameters
-    @CsvSource(value = {"19-09-2022, hi, 0x99cc99ff", // this way we can use multiple parameters
-            "15-07-1985, whats up, 0x99cc99ff"})
+    @CsvSource(value = {"19-09-2022, hi, 0xffcc99ff", // this way we can use multiple parameters
+            "15-07-1985, whats up, 0xe49ae4ff"})
     void calendarCreateOrUpdate(String dateString, String text, String colour) {
         List<String> list_of_props = new ArrayList<>();
         Collections.addAll(list_of_props,text,colour);
